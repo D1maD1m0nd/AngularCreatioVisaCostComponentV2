@@ -2,8 +2,12 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import {BuildTypes} from "./BuildTypes";
+
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: "https://fotodom.site:489/0",
+  buildType: BuildTypes.DEFAULT
 };
 
 /*
