@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { AgGridModule } from 'ag-grid-angular';
 import { AppComponent } from './app.component';
 import { AngularVisaCostComponent } from './components/angular-visa-cost/angular-visa-cost.component';
-
+import {CookieService} from "ngx-cookie-service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +17,7 @@ import { AngularVisaCostComponent } from './components/angular-visa-cost/angular
     HttpClientModule,
     AgGridModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
