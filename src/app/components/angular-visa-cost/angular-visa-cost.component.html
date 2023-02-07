@@ -1,1 +1,15 @@
-<p>angular-visa-cost works!</p>
+<ag-grid-angular
+  style="width: 100%; height: 100%;"
+  class="ag-theme-alpine"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  [autoGroupColumnDef]="autoGroupColumnDef"
+  [animateRows]="true"
+  [rowData]="rowData"
+  [rowGroupPanelShow]="rowGroupPanelShow"
+  (gridReady)="onGridReady($event)"
+  (rowEditingStarted)="onRowEditingStarted($event)"
+  (rowEditingStopped)="onRowEditingStopped($event)"
+  (cellEditingStarted)="onCellEditingStarted($event)"
+  (cellEditingStopped)="onCellEditingStopped($event)"
+></ag-grid-angular>
