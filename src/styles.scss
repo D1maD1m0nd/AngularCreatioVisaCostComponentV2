@@ -11,3 +11,16 @@ html, body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.number-cell {
+    text-align: right;
+}
+
+.selection-positive {
+    background: aquamarine;
+}
+
+.selection-negative {
+    background: rgba(255, 51, 144, 0.32);
+}

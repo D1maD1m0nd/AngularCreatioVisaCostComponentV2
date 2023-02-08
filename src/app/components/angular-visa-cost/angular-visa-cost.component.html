@@ -12,6 +12,8 @@
     [rowData]="rowDataCostItem"
     [rowGroupPanelShow]="rowGroupPanelShow"
     [rowSelection]="rowSelection"
+    [suppressRowClickSelection]="true"
+    [enableCellChangeFlash]="true"
     (gridReady)="onGridReady($event)"
     (rowEditingStarted)="onRowEditingStarted($event)"
     (rowEditingStopped)="onRowEditingStopped($event)"
