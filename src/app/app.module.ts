@@ -8,18 +8,25 @@ import { AngularVisaCostComponent } from './components/angular-visa-cost/angular
 import {CookieService} from "ngx-cookie-service";
 import { SavedGroupVisaComponent } from './components/saved-group-visa/saved-group-visa.component';
 import {MatButtonModule} from "@angular/material/button";
+
+import { HeaderGroupVisaComponent } from './components/header-group-visa/header-group-visa.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
 @NgModule({
   declarations: [
     AppComponent,
     AngularVisaCostComponent,
     SavedGroupVisaComponent,
+    HeaderGroupVisaComponent,
   ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
         AgGridModule,
-        MatButtonModule
+        MatButtonModule,
+        MatToolbarModule,
+        MatIconModule
     ],
   providers: [CookieService],
   bootstrap: [AppComponent]
