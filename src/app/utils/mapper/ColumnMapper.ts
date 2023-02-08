@@ -1,22 +1,8 @@
 import {ICostColumn} from "../../data/model/response/CostColumn";
 import {ColDef} from "ag-grid-community";
+import {editableColumn, invisibleColumn} from "../constants/ConfigurationColumnsConstants";
 
-const invisibleColumn: string[] = [
-    "DetailBudgetId",
-    "YearName",
-    "BrandName",
-    "FirstQuarterPlanSumBranch",
-    "SecondQuarterPlanSumBranch",
-    "ThirdQuarterPlanSumBranch",
-    "FourthQuarterPlanSumBranch"
-]
 
-const editableColumn: string[] = [
-    "FirstQuarterNewSum",
-    "SecondQuarterNewSum",
-    "ThirdQuarterNewSum",
-    "FourthQuarterNewSum"
-]
 export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): ColDef[] {
     return CostItemColumn.map((i) => {
             const isString = typeof instance[i.ItemCostKey] === 'string';
