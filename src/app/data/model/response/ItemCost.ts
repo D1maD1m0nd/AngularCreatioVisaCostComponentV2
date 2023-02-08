@@ -1,4 +1,4 @@
-export class ICostItem {
+export interface ICostItem {
     FilialName: string
     GroupItemName: string
     CostItemName: string

@@ -1,5 +1,5 @@
 import {IGetVisaItemsResult} from "./GetVisaItemsResult";
 
-export class IVisaCostSummary {
+export interface IVisaCostSummary {
     GetVisaItemsResult: IGetVisaItemsResult
 }

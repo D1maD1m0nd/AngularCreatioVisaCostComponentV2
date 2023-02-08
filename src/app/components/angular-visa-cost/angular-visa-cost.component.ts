@@ -64,7 +64,7 @@ export class AngularVisaCostComponent implements OnInit {
     //     "brandBudgetId": "f4c9e1ef-167e-4aef-b2c1-56950486df79"
     this.apiClient.GetVisaSummary(this.year, this.brand).subscribe((i: IVisaCostSummary) => {
       const ItemResult : IGetVisaItemsResult = i.GetVisaItemsResult;
-      this.columnDefs = ToColumnDefArr(ItemResult.CostItemColumn);
+      this.columnDefs = ToColumnDefArr(ItemResult.CostItemColumn, ItemResult.CostItemsResult[0]);
       this.rowDataCostItem = ItemResult.CostItemsResult;
     });
   }

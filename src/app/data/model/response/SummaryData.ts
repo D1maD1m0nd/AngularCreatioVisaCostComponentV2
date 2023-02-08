@@ -1,4 +1,4 @@
-export class ISummaryData {
+export interface ISummaryData {
     TotalSumPlan: number
     TotalSumPlanYearBranch: number
 }
