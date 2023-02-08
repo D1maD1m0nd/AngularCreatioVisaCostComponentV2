@@ -14,18 +14,7 @@ import {ICostItem} from "../../data/model/response/ItemCost";
 import {IVisaCostSummary} from "../../data/model/response/VisaCostSummary";
 import {IGetVisaItemsResult} from "../../data/model/response/GetVisaItemsResult";
 import {ToColumnDefArr} from "../../utils/mapper/ColumnMapper";
-export interface IOlympicData {
-  athlete: string;
-  age: number;
-  country: string;
-  year: number;
-  date: string;
-  sport: string;
-  gold: number;
-  silver: number;
-  bronze: number;
-  total: number;
-}
+
 @Component({
   selector: 'app-angular-visa-cost',
   templateUrl: './angular-visa-cost.component.html',
@@ -34,14 +23,7 @@ export interface IOlympicData {
 export class AngularVisaCostComponent implements OnInit {
 
   private gridApi!: GridApi;
-  public columnDefs: ColDef[] = [
-
-    { field: 'country', rowGroup: true, hide: true, enableRowGroup: true, filter: 'agSetColumnFilter'},
-    { field: 'year', rowGroup: true, hide: true, enableRowGroup: true, filter: 'agSetColumnFilter',  },
-    { field: 'gold', aggFunc: 'sum', headerName: 'Золото',filter: 'agSetColumnFilter', },
-    { field: 'silver', aggFunc: 'max', headerName: 'Серебро', filter: 'agSetColumnFilter',},
-    { field: 'bronze', aggFunc: 'avg', headerName: 'Бронза', filter: 'agSetColumnFilter',},
-  ];
+  public columnDefs: ColDef[];
   public defaultColDef: ColDef = {
     flex: 1,
     minWidth: 100,
@@ -55,7 +37,6 @@ export class AngularVisaCostComponent implements OnInit {
   @Input('year') year: string
   @Input("brand") brand: string
   public rowGroupPanelShow: 'always' | 'onlyWhenGrouping' | 'never' = 'always';
-  public rowData!: IOlympicData[];
   public rowDataCostItem!: ICostItem[];
   constructor(private apiClient: ApiClientService) {}
 
