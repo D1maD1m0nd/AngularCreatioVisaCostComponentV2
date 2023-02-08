@@ -11,14 +11,3 @@ export interface IGetVisaItemsResult {
     SummaryData: ISummaryData
     Error: string | null
 }
-
- export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance : any) : ColDef[] {
-  return CostItemColumn.map((i) =>
-    <ColDef>{
-    field: i.ItemCostKey,
-    headerName: i.Name,
-    enableRowGroup: typeof instance[i.ItemCostKey] === 'string',
-    filter: typeof instance[i.ItemCostKey] === 'string' ? 'agSetColumnFilter' : null,
-    aggFunc: typeof  instance[i.ItemCostKey] == 'number' ? 'sum' : null
-  })
-}

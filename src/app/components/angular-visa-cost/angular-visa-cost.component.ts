@@ -12,7 +12,8 @@ import "ag-grid-enterprise"
 import {ApiClientService} from "../../services/api-client.service";
 import {ICostItem} from "../../data/model/response/ItemCost";
 import {IVisaCostSummary} from "../../data/model/response/VisaCostSummary";
-import {IGetVisaItemsResult, ToColumnDefArr} from "../../data/model/response/GetVisaItemsResult";
+import {IGetVisaItemsResult} from "../../data/model/response/GetVisaItemsResult";
+import {ToColumnDefArr} from "../../utils/mapper/ColumnMapper";
 export interface IOlympicData {
   athlete: string;
   age: number;
@@ -46,11 +47,11 @@ export class AngularVisaCostComponent implements OnInit {
     minWidth: 100,
     sortable: true,
     resizable: true,
-    editable: true,
   };
   public autoGroupColumnDef: ColDef = {
     minWidth: 200,
   };
+  public rowSelection: 'single' | 'multiple' = 'single';
   @Input('year') year: string
   @Input("brand") brand: string
   public rowGroupPanelShow: 'always' | 'onlyWhenGrouping' | 'never' = 'always';
