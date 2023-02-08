@@ -15,7 +15,10 @@ export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): Co
                 enableRowGroup: isString,
                 filter: isString ? 'agSetColumnFilter' : null,
                 aggFunc: !isString ? 'sum' : null,
-                hide: isInvisible
+                hide: isInvisible,
+                valueParser: !isString ? 'Number(newValue)' : null,
+                cellClass: !isString ? 'number-cell' : null,
+                cellRenderer: !isString ? 'agAnimateShowChangeCellRenderer' : null,
             }
         }
     );

@@ -3,6 +3,7 @@ import {
     CellEditingStartedEvent,
     CellEditingStoppedEvent,
     ColDef,
+    FirstDataRenderedEvent,
     GridApi,
     GridReadyEvent,
     RowEditingStartedEvent,
@@ -34,10 +35,19 @@ export class AngularVisaCostComponent implements OnInit {
     public autoGroupColumnDef: ColDef = {
         minWidth: 200,
     };
-    public rowSelection: 'single' | 'multiple' = 'single';
+    public rowSelection: 'single' | 'multiple' = 'multiple';
     @Input('year') year: string
     @Input("brand") brand: string
     public rowGroupPanelShow: 'always' | 'onlyWhenGrouping' | 'never' = 'always';
+
+    onFirstDataRendered(params: FirstDataRenderedEvent<ICostItem>) {
+        params.api.forEachNode((node) => {
+                console.log(node)
+                node.setSelected(!!node.data && node.data.TotalSumPlan < node.data.TotalSumPlanYearBranch)
+            }
+        );
+    }
+
     public rowDataCostItem!: ICostItem[];
     public metaData: IMetaData = new class implements IMetaData {
         BrandId: string;
@@ -55,7 +65,6 @@ export class AngularVisaCostComponent implements OnInit {
         // "yearBudgetId": "42533c5f-b173-4386-a1d9-8e02e5b91d4d",
         //     "brandBudgetId": "f4c9e1ef-167e-4aef-b2c1-56950486df79"
         this.apiClient.GetVisaSummary(this.year, this.brand).subscribe((i: IVisaCostSummary) => {
-
             const ItemResult: IGetVisaItemsResult = i.GetVisaItemsResult;
             this.metaData = ItemResult.MetaData;
             this.columnDefs = ToColumnDefArr(ItemResult.CostItemColumn, ItemResult.CostItemsResult[0]);
@@ -77,6 +86,7 @@ export class AngularVisaCostComponent implements OnInit {
 
     onCellEditingStopped(event: CellEditingStoppedEvent) {
         console.log('cellEditingStopped');
+        console.log(event)
     }
 
     ngOnInit(): void {
