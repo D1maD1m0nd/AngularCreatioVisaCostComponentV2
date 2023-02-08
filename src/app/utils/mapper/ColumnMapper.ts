@@ -11,9 +11,9 @@ export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): Co
             return <ColDef>{
                 cellStyle: params => {
                     if(params.data) {
-                        if (params.data.TotalSumPlanYearBranch > params.data.TotalSumPlan) {
+                        if (params.data.TotalSumPlanYearBranch < params.data.TotalSumPlan) {
                             return {background: 'aquamarine'}
-                        } else if (params.data.TotalSumPlanYearBranch < params.data.TotalSumPlan) {
+                        } else if (params.data.TotalSumPlanYearBranch > params.data.TotalSumPlan) {
                             return {background: 'rgba(255, 51, 144, 0.32)'}
                         }
                     }
