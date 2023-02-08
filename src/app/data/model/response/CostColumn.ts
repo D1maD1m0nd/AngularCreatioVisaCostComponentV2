@@ -1,4 +1,6 @@
-export interface ICostColumn {
+import {ColDef} from "ag-grid-community";
+
+export class ICostColumn {
     Name: string
     ItemCostKey: string
     Position: number

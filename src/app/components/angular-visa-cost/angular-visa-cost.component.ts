@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {
   CellEditingStartedEvent, CellEditingStoppedEvent,
   ColDef,
@@ -9,6 +9,10 @@ import {
 } from "ag-grid-community";
 import {HttpClient} from "@angular/common/http";
 import "ag-grid-enterprise"
+import {ApiClientService} from "../../services/api-client.service";
+import {ICostItem} from "../../data/model/response/ItemCost";
+import {IVisaCostSummary} from "../../data/model/response/VisaCostSummary";
+import {IGetVisaItemsResult, ToColumnDefArr} from "../../data/model/response/GetVisaItemsResult";
 export interface IOlympicData {
   athlete: string;
   age: number;
@@ -47,20 +51,22 @@ export class AngularVisaCostComponent implements OnInit {
   public autoGroupColumnDef: ColDef = {
     minWidth: 200,
   };
+  @Input('year') year: string
+  @Input("brand") brand: string
   public rowGroupPanelShow: 'always' | 'onlyWhenGrouping' | 'never' = 'always';
   public rowData!: IOlympicData[];
+  public rowDataCostItem!: ICostItem[];
+  constructor(private apiClient: ApiClientService) {}
 
-  constructor(private http: HttpClient) {}
-
-  onGridReady(params: GridReadyEvent<IOlympicData>) {
-    this.http
-      .get<IOlympicData[]>(
-        'https://www.ag-grid.com/example-assets/olympic-winners.json'
-      )
-      .subscribe((data) => {
-        this.rowData = data
-        console.log(data)
-      });
+  onGridReady(params: GridReadyEvent<ICostItem>) {
+    console.log("grid ready")
+    // "yearBudgetId": "42533c5f-b173-4386-a1d9-8e02e5b91d4d",
+    //     "brandBudgetId": "f4c9e1ef-167e-4aef-b2c1-56950486df79"
+    this.apiClient.GetVisaSummary(this.year, this.brand).subscribe((i: IVisaCostSummary) => {
+      const ItemResult : IGetVisaItemsResult = i.GetVisaItemsResult;
+      this.columnDefs = ToColumnDefArr(ItemResult.CostItemColumn);
+      this.rowDataCostItem = ItemResult.CostItemsResult;
+    });
   }
   onRowEditingStarted(event: RowEditingStartedEvent) {
     console.log('never called - not doing row editing');

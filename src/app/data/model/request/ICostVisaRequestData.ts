@@ -1,4 +1,4 @@
-export interface ICostVisaRequestData {
-    yearBudgetId: string | null,
-    brandBudgetId: string | null,
+export class ICostVisaRequestData {
+    yearBudgetId: string | null
+    brandBudgetId: string | null
 }

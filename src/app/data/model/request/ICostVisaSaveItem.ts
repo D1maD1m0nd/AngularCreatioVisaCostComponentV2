@@ -1,4 +1,4 @@
-export interface ICostVisaSaveItem {
-    Id: string,
+export class ICostVisaSaveItem {
+    Id: string
     TotalSumPlan: number
 }

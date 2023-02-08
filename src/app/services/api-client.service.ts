@@ -9,11 +9,12 @@ import {ICostVisaSaveData} from "../data/model/request/ICostVisaSaveData";
 import {ICostVisaSaveItem} from "../data/model/request/ICostVisaSaveItem";
 import {CookieService} from "ngx-cookie-service";
 import {ErrorService} from "./error.service";
+import {tap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiClientServiceService {
+export class ApiClientService {
 
   VisaCostSummarySave: Map<string, number> = new Map();
   BASE_URL = environment.apiUrl
