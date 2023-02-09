@@ -1,25 +1,28 @@
-<div class="creatio-component-container">
-    <app-header-group-visa *ngIf="metaData" [metaData]="metaData"></app-header-group-visa>
-    <app-saved-group-visa
-        [ICostVisaItems]="rowDataCostItem"
-        [Brand]="brand"
-        [Year]="year"></app-saved-group-visa>
+<div class="ag-visa-component-container">
+    <div class="creatio-component-container">
+        <app-header-group-visa *ngIf="metaData" [metaData]="metaData"></app-header-group-visa>
+        <app-saved-group-visa
+            [ICostVisaItems]="rowDataCostItem"
+            [Brand]="brand"
+            [Year]="year"></app-saved-group-visa>
+    </div>
+    <ag-grid-angular
+        (cellEditingStarted)="onCellEditingStarted($event)"
+        (cellEditingStopped)="onCellEditingStopped($event)"
+        (gridReady)="onGridReady($event)"
+        (rowEditingStarted)="onRowEditingStarted($event)"
+        (rowEditingStopped)="onRowEditingStopped($event)"
+        [animateRows]="true"
+        [autoGroupColumnDef]="autoGroupColumnDef"
+        [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef"
+        [enableCellChangeFlash]="true"
+        [rowData]="rowDataCostItem"
+        [rowGroupPanelShow]="rowGroupPanelShow"
+        [rowSelection]="rowSelection"
+        [suppressRowClickSelection]="true"
+        class="ag-theme-alpine"
+        style="width: 100%; height: 100%;"
+    ></ag-grid-angular>
 </div>
-<ag-grid-angular
-    (cellEditingStarted)="onCellEditingStarted($event)"
-    (cellEditingStopped)="onCellEditingStopped($event)"
-    (gridReady)="onGridReady($event)"
-    (rowEditingStarted)="onRowEditingStarted($event)"
-    (rowEditingStopped)="onRowEditingStopped($event)"
-    [animateRows]="true"
-    [autoGroupColumnDef]="autoGroupColumnDef"
-    [columnDefs]="columnDefs"
-    [defaultColDef]="defaultColDef"
-    [enableCellChangeFlash]="true"
-    [rowData]="rowDataCostItem"
-    [rowGroupPanelShow]="rowGroupPanelShow"
-    [rowSelection]="rowSelection"
-    [suppressRowClickSelection]="true"
-    class="ag-theme-alpine"
-    style="width: 100%; height: 100%;"
-></ag-grid-angular>
+
