@@ -31,6 +31,7 @@ import {createCustomElement} from "@angular/elements";
         MatIconModule
     ],
     providers: [CookieService],
+    //пере сборкой компонента необхожимо закомментировать bootstrap Блок
     bootstrap: [VltVisaCostComponent],
     entryComponents: [AngularVisaCostComponent]
 })

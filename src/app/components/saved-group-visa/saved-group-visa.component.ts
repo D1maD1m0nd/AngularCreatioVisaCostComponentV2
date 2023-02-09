@@ -16,12 +16,16 @@ export class SavedGroupVisaComponent implements OnInit {
     }
 
     sendSavedData() {
-        this.apiClient.UpdateCostVisa(this.ICostVisaItem);
+        this.apiClient.UpdateCostVisa(this.ICostVisaItem).subscribe(i=> {
+            console.log(i);
+        });
         console.log(this.ICostVisaItem);
     }
 
     cancelSavedData() {
-        this.apiClient.GetVisaSummary(this.Year, this.Brand);
+        this.apiClient.GetVisaSummary(this.Year, this.Brand).subscribe(i => {
+            console.log(i);
+        });
     }
 
     ngOnInit(): void {
