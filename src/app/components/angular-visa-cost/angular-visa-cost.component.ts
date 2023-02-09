@@ -1,9 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, Output, OnInit} from '@angular/core';
 import {
     CellEditingStartedEvent,
     CellEditingStoppedEvent,
     ColDef,
-    FirstDataRenderedEvent,
     GridApi,
     GridReadyEvent,
     RowEditingStartedEvent,
@@ -48,7 +47,6 @@ export class AngularVisaCostComponent implements OnInit {
         YearId: string;
         YearName: string;
     }
-
     constructor(private apiClient: ApiClientService) {
     }
 
@@ -57,6 +55,7 @@ export class AngularVisaCostComponent implements OnInit {
         // "yearBudgetId": "42533c5f-b173-4386-a1d9-8e02e5b91d4d",
         //     "brandBudgetId": "f4c9e1ef-167e-4aef-b2c1-56950486df79"
         this.apiClient.GetVisaSummary(this.year, this.brand).subscribe((i: IVisaCostSummary) => {
+            console.log(i)
             const ItemResult: IGetVisaItemsResult = i.GetVisaItemsResult;
             this.metaData = ItemResult.MetaData;
             this.columnDefs = ToColumnDefArr(ItemResult.CostItemColumn, ItemResult.CostItemsResult[0]);

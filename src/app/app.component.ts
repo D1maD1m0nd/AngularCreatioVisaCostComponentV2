@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'vlt-visa-cost',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'AngularCreatioVisaCostComponentV2';
+export class VltVisaCostComponent {
+    @Input() year : string
+    @Input() brand : string
 }
