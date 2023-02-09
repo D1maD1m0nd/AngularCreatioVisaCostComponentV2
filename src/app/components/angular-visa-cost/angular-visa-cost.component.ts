@@ -1,4 +1,4 @@
-import {Component, Input, Output, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {
     CellEditingStartedEvent,
     CellEditingStoppedEvent,
@@ -23,7 +23,6 @@ import {IMetaData} from "../../data/model/response/MetaData";
 })
 export class AngularVisaCostComponent implements OnInit {
 
-    private gridApi!: GridApi;
     public columnDefs: ColDef[];
     public defaultColDef: ColDef = {
         flex: 1,
@@ -38,7 +37,6 @@ export class AngularVisaCostComponent implements OnInit {
     @Input('year') year: string
     @Input("brand") brand: string
     public rowGroupPanelShow: 'always' | 'onlyWhenGrouping' | 'never' = 'always';
-
     public rowDataCostItem!: ICostItem[];
     public metaData: IMetaData = new class implements IMetaData {
         BrandId: string;
@@ -47,6 +45,8 @@ export class AngularVisaCostComponent implements OnInit {
         YearId: string;
         YearName: string;
     }
+    private gridApi!: GridApi;
+
     constructor(private apiClient: ApiClientService) {
     }
 

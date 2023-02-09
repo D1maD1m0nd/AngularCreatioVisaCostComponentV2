@@ -9,7 +9,16 @@ import {ApiClientService} from "../../services/api-client.service";
 })
 export class SavedGroupVisaComponent implements OnInit {
     @Input("ICostVisaItems") ICostVisaItem: ICostItem[]
+
     constructor(private apiClient: ApiClientService) {
+    }
+
+    sendSavedData() {
+        console.log(this.ICostVisaItem);
+    }
+
+    cancelSavedData() {
+
     }
 
     ngOnInit(): void {

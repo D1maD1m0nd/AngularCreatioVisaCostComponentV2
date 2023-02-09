@@ -2,7 +2,6 @@ import {ICostColumn} from "./CostColumn";
 import {ICostItem} from "./ItemCost";
 import {IMetaData} from "./MetaData";
 import {ISummaryData} from "./SummaryData";
-import {ColDef} from "ag-grid-community";
 
 export interface IGetVisaItemsResult {
     CostItemColumn: ICostColumn[]
