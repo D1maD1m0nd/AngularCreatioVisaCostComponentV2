@@ -8,17 +8,14 @@ export function ToSaveCostData(CostItems: ICostItem[]): ICostVisaSaveData {
     const saveDataArray: ICostVisaSaveItem[] = [];
     CostItems.map((item) =>
         <ICostVisaSaveItem> {
-            Id: ite ,
-            TotalSumPlan: value
+            Id: item.VisaId ,
+            TotalSumPlan: item.TotalSumPlan,
+            FirstQuarterNewSum: item.FirstQuarterNewSum,
+            SecondQuarterNewSum: item.SecondQuarterNewSum,
+            ThirdQuarterNewSum: item.ThirdQuarterNewSum,
+            FourthQuarterNewSum: item.FourthQuarterNewSum
         }
     )
-    this.VisaCostSummarySave.forEach((value, key) => {
-        saveDataArray.push({
-                Id: key,
-                TotalSumPlan: value
-            }
-        );
-    });
     return {
         CostItemData: saveDataArray
     };

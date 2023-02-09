@@ -1,6 +1,9 @@
 <div class="creatio-component-container">
     <app-header-group-visa *ngIf="metaData" [metaData]="metaData"></app-header-group-visa>
-    <app-saved-group-visa [ICostVisaItems]="rowDataCostItem"></app-saved-group-visa>
+    <app-saved-group-visa
+        [ICostVisaItems]="rowDataCostItem"
+        [Brand]="brand"
+        [Year]="year"></app-saved-group-visa>
 </div>
 <ag-grid-angular
     (cellEditingStarted)="onCellEditingStarted($event)"

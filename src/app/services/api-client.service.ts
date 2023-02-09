@@ -9,6 +9,8 @@ import {ICostVisaSaveData} from "../data/model/request/ICostVisaSaveData";
 import {ICostVisaSaveItem} from "../data/model/request/ICostVisaSaveItem";
 import {CookieService} from "ngx-cookie-service";
 import {ErrorService} from "./error.service";
+import {ToSaveCostData} from "../utils/mapper/CostVisaMapper";
+import {ICostItem} from "../data/model/response/ItemCost";
 
 @Injectable({
     providedIn: 'root'
@@ -41,14 +43,14 @@ export class ApiClientService {
         this.VisaCostSummarySave.clear();
     }
 
-    UpdateCostVisa(): Observable<any> {
+    UpdateCostVisa(UpdateItems: ICostItem[]): Observable<any> {
         let url;
         if (environment.buildType == BuildTypes.CREATIO) {
             url = `${this.BASE_URL}/rest/VisaCostItemWebService/UpdateCostVisa`
         } else {
             url = `${this.BASE_URL}/ServiceModel/VisaCostItemWebService.svc/UpdateCostVisa`
         }
-        const data = this.PrepareDataBeforeSave()
+        const data = ToSaveCostData(UpdateItems);
         const headers = this.GetHeaders()
         return this.http.post(
             url,
@@ -85,19 +87,6 @@ export class ApiClientService {
         //     "brandBudgetId": "f4c9e1ef-167e-4aef-b2c1-56950486df79"
     }
 
-    private PrepareDataBeforeSave(): ICostVisaSaveData {
-        const saveDataArray: ICostVisaSaveItem[] = [];
-        this.VisaCostSummarySave.forEach((value, key) => {
-            saveDataArray.push({
-                    Id: key,
-                    TotalSumPlan: value
-                }
-            );
-        });
-        return {
-            CostItemData: saveDataArray
-        };
-    }
 
     private GetHeaders(): HttpHeaders {
         if (environment.buildType == BuildTypes.CREATIO) {

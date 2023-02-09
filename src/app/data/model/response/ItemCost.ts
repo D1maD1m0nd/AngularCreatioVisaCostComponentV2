@@ -20,4 +20,5 @@ export interface ICostItem {
     TotalSumPlanYearBranch: number
     DetailBudgetId: string
     YearName: string
+    VisaId: string
 }
