@@ -32,7 +32,7 @@ import {createCustomElement} from "@angular/elements";
     ],
     providers: [CookieService],
     //пере сборкой компонента необхожимо закомментировать bootstrap Блок
-    bootstrap: [VltVisaCostComponent],
+    //bootstrap: [VltVisaCostComponent],
     entryComponents: [AngularVisaCostComponent]
 })
 export class AppModule implements DoBootstrap {

@@ -6,7 +6,8 @@ import {
     GridApi,
     GridReadyEvent,
     RowEditingStartedEvent,
-    RowEditingStoppedEvent
+    RowEditingStoppedEvent,
+    DomLayoutType,
 } from "ag-grid-community";
 import "ag-grid-enterprise"
 import {ApiClientService} from "../../services/api-client.service";
@@ -22,7 +23,7 @@ import {IMetaData} from "../../data/model/response/MetaData";
     styleUrls: ['./angular-visa-cost.component.scss']
 })
 export class AngularVisaCostComponent implements OnInit {
-
+    public domLayout: DomLayoutType = 'autoHeight';
     public columnDefs: ColDef[];
     public defaultColDef: ColDef = {
         flex: 1,

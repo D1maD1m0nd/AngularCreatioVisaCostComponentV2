@@ -27,6 +27,7 @@
         "ag-grid-community": "^29.0.0",
         "ag-grid-enterprise": "^29.0.0",
         "concat": "^1.0.3",
+        "firebase": "^9.17.1",
         "fs-extra": "^11.1.0",
         "jscat": "^0.0.2",
         "ngx-cookie-service": "^13.2.1",
