@@ -1,4 +1,5 @@
 export interface ICostItem {
+    VisaBudgetFilialId: string
     IsAproveBrendManager: boolean
     IsAproveOwnerFilial: boolean
     FilialName: string

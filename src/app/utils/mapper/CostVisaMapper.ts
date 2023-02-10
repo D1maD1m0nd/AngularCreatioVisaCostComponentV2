@@ -12,6 +12,7 @@ export function ToSaveCostData(CostItems: ICostItem[]): ICostVisaSaveData {
         )
         .map((item) =>
             <ICostVisaSaveItem>{
+                VisaBudgetFilialId: item.VisaBudgetFilialId,
                 DetailBudgetId: item.DetailBudgetId,
                 VisaId: item.VisaId,
                 IsAproveBrendManager: item.IsAproveBrendManager,
