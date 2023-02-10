@@ -16,6 +16,7 @@ import {IVisaCostSummary} from "../../data/model/response/VisaCostSummary";
 import {IGetVisaItemsResult} from "../../data/model/response/GetVisaItemsResult";
 import {ToColumnDefArr} from "../../utils/mapper/ColumnMapper";
 import {IMetaData} from "../../data/model/response/MetaData";
+import {CheckboxRenderComponent} from "../checkbox-render-component/checkbox-render.component";
 
 @Component({
     selector: 'app-angular-visa-cost',
@@ -25,6 +26,7 @@ import {IMetaData} from "../../data/model/response/MetaData";
 export class AngularVisaCostComponent implements OnInit {
     public domLayout: DomLayoutType = 'autoHeight';
     public columnDefs: ColDef[];
+    public frameworkComponents: any
     public defaultColDef: ColDef = {
         flex: 1,
         minWidth: 100,
@@ -49,6 +51,9 @@ export class AngularVisaCostComponent implements OnInit {
     private gridApi!: GridApi;
 
     constructor(private apiClient: ApiClientService) {
+        this.frameworkComponents = {
+            checkboxRenderer: CheckboxRenderComponent
+        };
     }
 
     onGridReady(params: GridReadyEvent<ICostItem>) {
@@ -80,6 +85,7 @@ export class AngularVisaCostComponent implements OnInit {
         console.log('cellEditingStopped');
         console.log(event)
     }
+
 
     ngOnInit(): void {
     }
