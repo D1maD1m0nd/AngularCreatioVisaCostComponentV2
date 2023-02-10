@@ -33,11 +33,12 @@ export class ApiClientService {
     UpdateRecordsDetailBudgetSum(UpdateItems: ICostItem[]) {
         let url;
         if (environment.buildType == BuildTypes.CREATIO) {
-            url = `${this.BASE_URL}/rest/VisaCostItemWebService/UpdateRecordsDetailBudgetSum`
+            url = `${this.BASE_URL}/rest/VisaCostItemWebService/UpdateRecordsDetailBudgetSum`;
         } else {
-            url = `${this.BASE_URL}/ServiceModel/VisaCostItemWebService.svc/UpdateRecordsDetailBudgetSum`
+            url = `${this.BASE_URL}/ServiceModel/VisaCostItemWebService.svc/UpdateRecordsDetailBudgetSum`;
         }
         const data = ToSaveCostData(UpdateItems);
+        console.log(data)
         const headers = this.GetHeaders()
         return this.http.post(
             url,
@@ -51,9 +52,9 @@ export class ApiClientService {
     UpdateCostVisa(UpdateItems: ICostItem[]): Observable<any> {
         let url;
         if (environment.buildType == BuildTypes.CREATIO) {
-            url = `${this.BASE_URL}/rest/VisaCostItemWebService/UpdateCostVisa`
+            url = `${this.BASE_URL}/rest/VisaCostItemWebService/UpdateCostVisa`;
         } else {
-            url = `${this.BASE_URL}/ServiceModel/VisaCostItemWebService.svc/UpdateCostVisa`
+            url = `${this.BASE_URL}/ServiceModel/VisaCostItemWebService.svc/UpdateCostVisa`;
         }
         const data = ToSaveCostData(UpdateItems);
         const headers = this.GetHeaders();

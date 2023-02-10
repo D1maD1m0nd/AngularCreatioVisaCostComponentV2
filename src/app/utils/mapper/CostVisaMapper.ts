@@ -4,12 +4,6 @@ import {ICostItem} from "../../data/model/response/ItemCost";
 
 export function ToSaveCostData(CostItems: ICostItem[]): ICostVisaSaveData {
     const saveDataArray: ICostVisaSaveItem[] = CostItems
-        .filter(i =>
-            i.FirstQuarterNewSum > 0 ||
-            i.SecondQuarterNewSum > 0 ||
-            i.ThirdQuarterNewSum > 0 ||
-            i.FourthQuarterNewSum > 0
-        )
         .map((item) =>
             <ICostVisaSaveItem>{
                 VisaBudgetFilialId: item.VisaBudgetFilialId,

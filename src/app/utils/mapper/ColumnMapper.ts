@@ -19,7 +19,6 @@ export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): Co
                 return null;
             }
             const renderType = cellRender();
-            console.log(renderType);
             return <ColDef>{
                 cellStyle: params => {
                     if (params.data) {
@@ -40,7 +39,7 @@ export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): Co
                 hide: isInvisible,
                 valueParser: isNumber ? 'Number(newValue)' : null,
                 cellClass: isNumber ? 'number-cell' : null,
-                cellRenderer: cellRender(),
+                cellRenderer: renderType,
             }
         }
     );

@@ -25,7 +25,7 @@ export class CheckboxRenderComponent implements OnInit, ICellRendererAngularComp
     }
 
     checkedHandler(event: any) {
-        let checked = event.target.checked;
+        let checked = event.checked;
         let colId = this.params.column.colId;
         this.params.node.setDataValue(colId, checked);
     }
