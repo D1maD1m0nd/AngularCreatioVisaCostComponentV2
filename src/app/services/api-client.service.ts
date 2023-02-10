@@ -14,8 +14,6 @@ import {ICostItem} from "../data/model/response/ItemCost";
     providedIn: 'root'
 })
 export class ApiClientService {
-
-    VisaCostSummarySave: Map<string, number> = new Map();
     BASE_URL = environment.apiUrl
     BPM_CSRF_TOKEN: string
 
