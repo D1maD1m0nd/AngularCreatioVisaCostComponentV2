@@ -34,15 +34,23 @@ export class ApiClientService {
         }
     }
 
-    AddSaveData(id: string, sum: number) {
-        console.log(`AddSave Data ${id}, ${sum}`);
-        this.VisaCostSummarySave.set(id, sum);
+    UpdateRecordsDetailBudgetSum(UpdateItems: ICostItem[]) {
+        let url;
+        if (environment.buildType == BuildTypes.CREATIO) {
+            url = `${this.BASE_URL}/rest/VisaCostItemWebService/UpdateRecordsDetailBudgetSum`
+        } else {
+            url = `${this.BASE_URL}/ServiceModel/VisaCostItemWebService.svc/UpdateRecordsDetailBudgetSum`
+        }
+        const data = ToSaveCostData(UpdateItems, true);
+        const headers = this.GetHeaders()
+        return this.http.post(
+            url,
+            data,
+            {
+                headers: headers
+            }
+        );
     }
-
-    ClearSaveData() {
-        this.VisaCostSummarySave.clear();
-    }
-
     UpdateCostVisa(UpdateItems: ICostItem[]): Observable<any> {
         let url;
         if (environment.buildType == BuildTypes.CREATIO) {
@@ -50,7 +58,7 @@ export class ApiClientService {
         } else {
             url = `${this.BASE_URL}/ServiceModel/VisaCostItemWebService.svc/UpdateCostVisa`
         }
-        const data = ToSaveCostData(UpdateItems);
+        const data = ToSaveCostData(UpdateItems, false);
         const headers = this.GetHeaders()
         return this.http.post(
             url,
@@ -83,8 +91,6 @@ export class ApiClientService {
             .pipe(
                 catchError(this.errorHandler.bind(this))
             );
-        // "yearBudgetId": "42533c5f-b173-4386-a1d9-8e02e5b91d4d",
-        //     "brandBudgetId": "f4c9e1ef-167e-4aef-b2c1-56950486df79"
     }
 
 

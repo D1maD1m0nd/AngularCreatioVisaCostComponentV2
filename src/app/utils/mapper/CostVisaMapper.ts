@@ -4,10 +4,10 @@ import {ICostVisaSaveData} from "../../data/model/request/ICostVisaSaveData";
 import {ICostVisaSaveItem} from "../../data/model/request/ICostVisaSaveItem";
 import {ICostItem} from "../../data/model/response/ItemCost";
 
-export function ToSaveCostData(CostItems: ICostItem[]): ICostVisaSaveData {
+export function ToSaveCostData(CostItems: ICostItem[], isApprove : boolean): ICostVisaSaveData {
     const saveDataArray: ICostVisaSaveItem[] = CostItems.map((item) =>
         <ICostVisaSaveItem> {
-            Id: item.VisaId ,
+            Id: isApprove ? item.DetailBudgetId : item.VisaId,
             TotalSumPlan: item.TotalSumPlan,
             FirstQuarterNewSum: item.FirstQuarterNewSum,
             SecondQuarterNewSum: item.SecondQuarterNewSum,
