@@ -1,9 +1,8 @@
-
 <div class="creatio-component-container">
     <app-header-group-visa *ngIf="metaData" [metaData]="metaData"></app-header-group-visa>
     <app-saved-group-visa
-        [ICostVisaItems]="rowDataCostItem"
         [Brand]="brand"
+        [ICostVisaItems]="rowDataCostItem"
         [Year]="year"></app-saved-group-visa>
 </div>
 <ag-grid-angular
@@ -12,17 +11,17 @@
     (gridReady)="onGridReady($event)"
     (rowEditingStarted)="onRowEditingStarted($event)"
     (rowEditingStopped)="onRowEditingStopped($event)"
-    [frameworkComponents]="frameworkComponents"
     [animateRows]="true"
     [autoGroupColumnDef]="autoGroupColumnDef"
     [columnDefs]="columnDefs"
     [defaultColDef]="defaultColDef"
+    [domLayout]="domLayout"
     [enableCellChangeFlash]="true"
+    [frameworkComponents]="frameworkComponents"
     [rowData]="rowDataCostItem"
     [rowGroupPanelShow]="rowGroupPanelShow"
     [rowSelection]="rowSelection"
     [suppressRowClickSelection]="true"
-    [domLayout]="domLayout"
     class="ag-theme-alpine"
     style="width: 100%; height: 100%;"
 ></ag-grid-angular>

@@ -5,8 +5,6 @@ import {ICostVisaRequestData} from "../data/model/request/ICostVisaRequestData";
 import {catchError, Observable, throwError} from "rxjs";
 import {BuildTypes} from "../../environments/BuildTypes";
 import {environment} from "../../environments/environment";
-import {ICostVisaSaveData} from "../data/model/request/ICostVisaSaveData";
-import {ICostVisaSaveItem} from "../data/model/request/ICostVisaSaveItem";
 import {CookieService} from "ngx-cookie-service";
 import {ErrorService} from "./error.service";
 import {ToSaveCostData} from "../utils/mapper/CostVisaMapper";
@@ -34,13 +32,22 @@ export class ApiClientService {
         }
     }
 
-    AddSaveData(id: string, sum: number) {
-        console.log(`AddSave Data ${id}, ${sum}`);
-        this.VisaCostSummarySave.set(id, sum);
-    }
-
-    ClearSaveData() {
-        this.VisaCostSummarySave.clear();
+    UpdateRecordsDetailBudgetSum(UpdateItems: ICostItem[]) {
+        let url;
+        if (environment.buildType == BuildTypes.CREATIO) {
+            url = `${this.BASE_URL}/rest/VisaCostItemWebService/UpdateRecordsDetailBudgetSum`
+        } else {
+            url = `${this.BASE_URL}/ServiceModel/VisaCostItemWebService.svc/UpdateRecordsDetailBudgetSum`
+        }
+        const data = ToSaveCostData(UpdateItems);
+        const headers = this.GetHeaders()
+        return this.http.post(
+            url,
+            data,
+            {
+                headers: headers
+            }
+        );
     }
 
     UpdateCostVisa(UpdateItems: ICostItem[]): Observable<any> {
@@ -83,8 +90,6 @@ export class ApiClientService {
             .pipe(
                 catchError(this.errorHandler.bind(this))
             );
-        // "yearBudgetId": "42533c5f-b173-4386-a1d9-8e02e5b91d4d",
-        //     "brandBudgetId": "f4c9e1ef-167e-4aef-b2c1-56950486df79"
     }
 
 

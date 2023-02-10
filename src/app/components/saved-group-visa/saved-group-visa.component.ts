@@ -15,8 +15,15 @@ export class SavedGroupVisaComponent implements OnInit {
     constructor(private apiClient: ApiClientService) {
     }
 
+    approveSavedData() {
+        this.apiClient.UpdateRecordsDetailBudgetSum(this.ICostVisaItem).subscribe(i => {
+            console.log(i);
+        });
+        console.log(this.ICostVisaItem);
+    }
+
     sendSavedData() {
-        this.apiClient.UpdateCostVisa(this.ICostVisaItem).subscribe(i=> {
+        this.apiClient.UpdateCostVisa(this.ICostVisaItem).subscribe(i => {
             console.log(i);
         });
         console.log(this.ICostVisaItem);

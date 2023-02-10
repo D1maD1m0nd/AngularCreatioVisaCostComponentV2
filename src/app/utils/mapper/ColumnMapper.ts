@@ -11,7 +11,7 @@ export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): Co
             const isInvisible = invisibleColumn.includes(i.ItemCostKey);
             const isEditable = editableColumn.includes(i.ItemCostKey);
             const cellRender = function () {
-                if(isNumber) {
+                if (isNumber) {
                     return 'agAnimateShowChangeCellRenderer';
                 } else if (isBoolean) {
                     return 'checkboxRenderer';

@@ -3,11 +3,11 @@ import {
     CellEditingStartedEvent,
     CellEditingStoppedEvent,
     ColDef,
+    DomLayoutType,
     GridApi,
     GridReadyEvent,
     RowEditingStartedEvent,
     RowEditingStoppedEvent,
-    DomLayoutType,
 } from "ag-grid-community";
 import "ag-grid-enterprise"
 import {ApiClientService} from "../../services/api-client.service";

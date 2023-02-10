@@ -1,8 +1,12 @@
 export class ICostVisaSaveItem {
-    Id: string
+    IsAproveBrendManager: boolean
+    IsAproveOwnerFilial: boolean
+    DetailBudgetId: string
+    VisaId: string
     TotalSumPlan: number
     FirstQuarterNewSum: number
     SecondQuarterNewSum: number
     ThirdQuarterNewSum: number
     FourthQuarterNewSum: number
+
 }
