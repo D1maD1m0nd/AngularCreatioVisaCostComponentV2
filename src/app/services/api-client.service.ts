@@ -56,7 +56,7 @@ export class ApiClientService {
             url = `${this.BASE_URL}/ServiceModel/VisaCostItemWebService.svc/UpdateCostVisa`
         }
         const data = ToSaveCostData(UpdateItems);
-        const headers = this.GetHeaders()
+        const headers = this.GetHeaders();
         return this.http.post(
             url,
             data,
