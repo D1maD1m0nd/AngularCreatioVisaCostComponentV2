@@ -14,3 +14,9 @@ export const editableColumn: string[] = [
     "ThirdQuarterNewSum",
     "FourthQuarterNewSum"
 ]
+
+
+export const colorStatus = {
+    Positive: {background: 'aquamarine'},
+    Negative: {background: 'rgba(255, 51, 144, 0.32)'}
+}

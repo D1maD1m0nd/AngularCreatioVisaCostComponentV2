@@ -1,4 +1,6 @@
 export interface ICostItem {
+    IsAproveBrendManager: boolean
+    IsAproveOwnerFilial: boolean
     FilialName: string
     GroupItemName: string
     CostItemName: string
