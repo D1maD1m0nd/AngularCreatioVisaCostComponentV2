@@ -15,6 +15,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {createCustomElement} from "@angular/elements";
 import {CheckboxRenderComponent,} from './components/checkbox-render-component/checkbox-render.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { TotalValueVisaFooterComponent } from './components/total-value-visa-footer/total-value-visa-footer.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         SavedGroupVisaComponent,
         HeaderGroupVisaComponent,
         CheckboxRenderComponent,
+        TotalValueVisaFooterComponent,
     ],
     imports: [
         BrowserModule,

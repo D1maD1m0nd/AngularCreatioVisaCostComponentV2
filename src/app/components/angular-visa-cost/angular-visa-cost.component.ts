@@ -48,8 +48,6 @@ export class AngularVisaCostComponent implements OnInit {
         YearId: string;
         YearName: string;
     }
-    private gridApi!: GridApi;
-
     constructor(private apiClient: ApiClientService) {
         this.frameworkComponents = {
             checkboxRenderer: CheckboxRenderComponent
