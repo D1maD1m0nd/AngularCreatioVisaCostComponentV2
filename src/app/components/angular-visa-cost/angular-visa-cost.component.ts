@@ -17,7 +17,6 @@ import {IGetVisaItemsResult} from "../../data/model/response/GetVisaItemsResult"
 import {ToColumnDefArr} from "../../utils/mapper/ColumnMapper";
 import {IMetaData} from "../../data/model/response/MetaData";
 import {CheckboxRenderComponent} from "../checkbox-render-component/checkbox-render.component";
-
 @Component({
     selector: 'app-angular-visa-cost',
     templateUrl: './angular-visa-cost.component.html',
