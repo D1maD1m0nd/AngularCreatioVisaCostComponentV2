@@ -4,6 +4,8 @@
         [Brand]="brand"
         [ICostVisaItems]="rowDataCostItem"
         [Year]="year"></app-saved-group-visa>
+    <app-header-total-budget
+    [summary-data]="summaryData"></app-header-total-budget>
 </div>
 <ag-grid-angular
     (cellEditingStarted)="onCellEditingStarted($event)"

@@ -17,6 +17,7 @@ import {IGetVisaItemsResult} from "../../data/model/response/GetVisaItemsResult"
 import {ToColumnDefArr} from "../../utils/mapper/ColumnMapper";
 import {IMetaData} from "../../data/model/response/MetaData";
 import {CheckboxRenderComponent} from "../checkbox-render-component/checkbox-render.component";
+import {ISummaryData} from "../../data/model/response/SummaryData";
 @Component({
     selector: 'app-angular-visa-cost',
     templateUrl: './angular-visa-cost.component.html',
@@ -42,6 +43,7 @@ export class AngularVisaCostComponent implements OnInit {
     public rowGroupPanelShow: 'always' | 'onlyWhenGrouping' | 'never' = 'always';
     public rowDataCostItem!: ICostItem[];
     public metaData: IMetaData
+    public summaryData: ISummaryData
     constructor(private apiClient: ApiClientService) {
         this.frameworkComponents = {
             checkboxRenderer: CheckboxRenderComponent
@@ -54,9 +56,9 @@ export class AngularVisaCostComponent implements OnInit {
         // "brandBudgetId": "f4c9e1ef-167e-4aef-b2c1-56950486df79"
         // "filialId": "bdb405a1-6300-4e72-98b0-f49d71dd6d66"
         this.apiClient.GetVisaSummary(this.year, this.brand, this.filial).subscribe((i: IVisaCostSummary) => {
-            console.log(i)
             const ItemResult: IGetVisaItemsResult = i.GetVisaItemsResult;
             this.metaData = ItemResult.MetaData;
+            this.summaryData = ItemResult.SummaryData;
             this.columnDefs = ToColumnDefArr(ItemResult.CostItemColumn, ItemResult.CostItemsResult[0]);
             this.rowDataCostItem = ItemResult.CostItemsResult;
         });

@@ -16,6 +16,7 @@ import {createCustomElement} from "@angular/elements";
 import {CheckboxRenderComponent,} from './components/checkbox-render-component/checkbox-render.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { HeaderTotalBudgetComponent } from './components/header-total-budget/header-total-budget.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
         SavedGroupVisaComponent,
         HeaderGroupVisaComponent,
         CheckboxRenderComponent,
+        HeaderTotalBudgetComponent,
     ],
     imports: [
         BrowserModule,
