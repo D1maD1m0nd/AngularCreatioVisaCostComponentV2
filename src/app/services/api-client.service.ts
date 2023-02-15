@@ -67,7 +67,7 @@ export class ApiClientService {
         );
     }
 
-    GetVisaSummary(YearId: string | null, BrandId: string | null): Observable<IVisaCostSummary> {
+    GetVisaSummary(YearId: string | null, BrandId: string | null, filial: string | null): Observable<IVisaCostSummary> {
         let url;
         console.log()
         if (environment.buildType == BuildTypes.CREATIO) {
@@ -77,7 +77,8 @@ export class ApiClientService {
         }
         const data: ICostVisaRequestData = {
             yearBudgetId: YearId,
-            brandBudgetId: BrandId
+            brandBudgetId: BrandId,
+            filialId: filial
         };
         const headers = this.GetHeaders();
         return this.http.post<IVisaCostSummary>(

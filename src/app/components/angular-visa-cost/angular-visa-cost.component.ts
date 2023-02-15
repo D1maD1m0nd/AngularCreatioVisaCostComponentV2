@@ -23,6 +23,9 @@ import {CheckboxRenderComponent} from "../checkbox-render-component/checkbox-ren
     styleUrls: ['./angular-visa-cost.component.scss']
 })
 export class AngularVisaCostComponent implements OnInit {
+    @Input('year') year: string
+    @Input("brand") brand: string
+    @Input("filial") filial: string
     public domLayout: DomLayoutType = 'autoHeight';
     public columnDefs: ColDef[];
     public frameworkComponents: any
@@ -36,17 +39,9 @@ export class AngularVisaCostComponent implements OnInit {
         minWidth: 300,
     };
     public rowSelection: 'single' | 'multiple' = 'multiple';
-    @Input('year') year: string
-    @Input("brand") brand: string
     public rowGroupPanelShow: 'always' | 'onlyWhenGrouping' | 'never' = 'always';
     public rowDataCostItem!: ICostItem[];
-    public metaData: IMetaData = new class implements IMetaData {
-        BrandId: string;
-        BrandName: string;
-        CurrentUserId: string;
-        YearId: string;
-        YearName: string;
-    }
+    public metaData: IMetaData
     constructor(private apiClient: ApiClientService) {
         this.frameworkComponents = {
             checkboxRenderer: CheckboxRenderComponent
@@ -56,8 +51,9 @@ export class AngularVisaCostComponent implements OnInit {
     onGridReady(params: GridReadyEvent<ICostItem>) {
         console.log("grid ready")
         // "yearBudgetId": "42533c5f-b173-4386-a1d9-8e02e5b91d4d",
-        //     "brandBudgetId": "f4c9e1ef-167e-4aef-b2c1-56950486df79"
-        this.apiClient.GetVisaSummary(this.year, this.brand).subscribe((i: IVisaCostSummary) => {
+        // "brandBudgetId": "f4c9e1ef-167e-4aef-b2c1-56950486df79"
+        // "filialId": "bdb405a1-6300-4e72-98b0-f49d71dd6d66"
+        this.apiClient.GetVisaSummary(this.year, this.brand, this.filial).subscribe((i: IVisaCostSummary) => {
             console.log(i)
             const ItemResult: IGetVisaItemsResult = i.GetVisaItemsResult;
             this.metaData = ItemResult.MetaData;
