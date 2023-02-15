@@ -1,7 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ICostItem} from "../../data/model/response/ItemCost";
 import {ApiClientService} from "../../services/api-client.service";
-
+import {
+    MatSnackBar,
+} from '@angular/material/snack-bar';
 @Component({
     selector: 'app-saved-group-visa',
     templateUrl: './saved-group-visa.component.html',
@@ -12,12 +14,13 @@ export class SavedGroupVisaComponent implements OnInit {
     @Input("Year") Year: string
     @Input("Brand") Brand: string
 
-    constructor(private apiClient: ApiClientService) {
+    constructor(private apiClient: ApiClientService, private _snackBar: MatSnackBar) {
     }
 
     approveSavedData() {
         this.apiClient.UpdateRecordsDetailBudgetSum(this.ICostVisaItem).subscribe(i => {
             console.log(i);
+            this.openSnackBar("Сохранение прошло успешно");
         });
         console.log(this.ICostVisaItem);
     }
@@ -25,14 +28,13 @@ export class SavedGroupVisaComponent implements OnInit {
     sendSavedData() {
         this.apiClient.UpdateCostVisa(this.ICostVisaItem).subscribe(i => {
             console.log(i);
+            this.openSnackBar("Сохранение прошло успешно");
         });
         console.log(this.ICostVisaItem);
     }
 
-    cancelSavedData() {
-        this.apiClient.GetVisaSummary(this.Year, this.Brand).subscribe(i => {
-            console.log(i);
-        });
+    openSnackBar(message: string) {
+        this._snackBar.open(message);
     }
 
     ngOnInit(): void {

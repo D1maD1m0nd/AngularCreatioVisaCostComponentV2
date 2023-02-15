@@ -15,6 +15,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {createCustomElement} from "@angular/elements";
 import {CheckboxRenderComponent,} from './components/checkbox-render-component/checkbox-render.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
     declarations: [
@@ -32,11 +33,12 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatButtonModule,
         MatToolbarModule,
         MatIconModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatSnackBarModule
     ],
     providers: [CookieService],
     //пере сборкой компонента необхожимо закомментировать bootstrap Блок
-    bootstrap: [VltVisaCostComponent],
+   // bootstrap: [VltVisaCostComponent],
     entryComponents: [AngularVisaCostComponent]
 })
 export class AppModule implements DoBootstrap {

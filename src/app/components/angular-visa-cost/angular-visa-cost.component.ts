@@ -33,7 +33,7 @@ export class AngularVisaCostComponent implements OnInit {
         resizable: true,
     };
     public autoGroupColumnDef: ColDef = {
-        minWidth: 200,
+        minWidth: 300,
     };
     public rowSelection: 'single' | 'multiple' = 'multiple';
     @Input('year') year: string
