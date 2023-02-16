@@ -13,7 +13,6 @@ import "ag-grid-enterprise"
 import {ApiClientService} from "../../services/api-client.service";
 import {ICostItem} from "../../data/model/response/ItemCost";
 import {IVisaCostSummary} from "../../data/model/response/VisaCostSummary";
-import {IGetVisaItemsResult} from "../../data/model/response/GetVisaItemsResult";
 import {ToColumnDefArr} from "../../utils/mapper/ColumnMapper";
 import {IMetaData} from "../../data/model/response/MetaData";
 import {CheckboxRenderComponent} from "../checkbox-render-component/checkbox-render.component";
@@ -55,15 +54,11 @@ export class AngularVisaCostComponent implements OnInit {
 
     onGridReady(params: GridReadyEvent<ICostItem>) {
         console.log("grid ready")
-        // "yearBudgetId": "42533c5f-b173-4386-a1d9-8e02e5b91d4d",
-        // "brandBudgetId": "f4c9e1ef-167e-4aef-b2c1-56950486df79"
-        // "filialId": "bdb405a1-6300-4e72-98b0-f49d71dd6d66"
-        this.apiClient.GetVisaSummary(this.year, this.brand, this.filial).subscribe((i: IVisaCostSummary) => {
-            const ItemResult: IGetVisaItemsResult = i.GetVisaItemsResult;
-            this.metaData = ItemResult.MetaData;
-            this.summaryData = ItemResult.SummaryData;
-            this.columnDefs = ToColumnDefArr(ItemResult.CostItemColumn, ItemResult.CostItemsResult[0]);
-            this.rowDataCostItem = ItemResult.CostItemsResult;
+        this.apiClient.GetVisaSummary(this.year, this.brand, this.filial).subscribe((item: IVisaCostSummary) => {
+            this.metaData = item.MetaData;
+            this.summaryData = item.SummaryData;
+            this.columnDefs = ToColumnDefArr(item.CostItemColumn, item.CostItemsResult[0]);
+            this.rowDataCostItem = item.CostItemsResult;
         });
     }
 
