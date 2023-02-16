@@ -4,7 +4,6 @@ import {
     CellEditingStoppedEvent,
     ColDef,
     DomLayoutType,
-    GridApi,
     GridReadyEvent,
     RowEditingStartedEvent,
     RowEditingStoppedEvent,
@@ -31,7 +30,7 @@ export class AngularVisaCostComponent implements OnInit {
     public frameworkComponents: any
     public defaultColDef: ColDef = {
         flex: 1,
-        initialWidth: 300,
+        minWidth: 150,
         wrapHeaderText: true,
         autoHeaderHeight: true,
         suppressSizeToFit: true,
