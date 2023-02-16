@@ -32,7 +32,10 @@ export class AngularVisaCostComponent implements OnInit {
     public frameworkComponents: any
     public defaultColDef: ColDef = {
         flex: 1,
-        minWidth: 100,
+        initialWidth: 300,
+        wrapHeaderText: true,
+        autoHeaderHeight: true,
+        suppressSizeToFit: true,
         sortable: true,
         resizable: true,
     };
