@@ -41,7 +41,14 @@ export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): Co
                 valueParser: isNumber ? 'Number(newValue)' : null,
                 cellClass: isNumber ? 'number-cell' : null,
                 cellRenderer: renderType,
-                valueSetter: isNumber ?  params => formatNumber(params.data.number) : undefined
+                valueFormatter: params => {
+                    if(isNumber && params.data) {
+                        const value = params.data[i.ItemCostKey];
+                        const formatNumberResult = formatNumber(value);
+                        return formatNumberResult;
+                    }
+                    return null;
+                }
             }
         }
     );
