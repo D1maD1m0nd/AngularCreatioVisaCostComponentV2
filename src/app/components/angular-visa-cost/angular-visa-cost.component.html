@@ -9,9 +9,11 @@
 <ag-grid-angular
     (cellEditingStarted)="onCellEditingStarted($event)"
     (cellEditingStopped)="onCellEditingStopped($event)"
+    (cellValueChanged)="onCellValueChanged($event)"
     (gridReady)="onGridReady($event)"
     (rowEditingStarted)="onRowEditingStarted($event)"
     (rowEditingStopped)="onRowEditingStopped($event)"
+    [enableGroupEdit] = "true"
     [animateRows]="true"
     [autoGroupColumnDef]="autoGroupColumnDef"
     [columnDefs]="columnDefs"

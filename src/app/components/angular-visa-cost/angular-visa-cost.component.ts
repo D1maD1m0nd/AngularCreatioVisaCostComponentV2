@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {
     CellEditingStartedEvent,
-    CellEditingStoppedEvent,
+    CellEditingStoppedEvent, CellValueChangedEvent,
     ColDef,
     DomLayoutType,
     GridReadyEvent,
@@ -78,7 +78,10 @@ export class AngularVisaCostComponent implements OnInit {
         console.log(event)
     }
 
-
+    onCellValueChanged(event: CellValueChangedEvent) {
+        console.log('cellEditingStopped');
+        console.log(event)
+    }
     ngOnInit(): void {
     }
 
