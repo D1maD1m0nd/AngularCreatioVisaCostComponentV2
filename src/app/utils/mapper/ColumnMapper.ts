@@ -1,6 +1,7 @@
 import {ICostColumn} from "../../data/model/response/CostColumn";
 import {ColDef} from "ag-grid-community";
 import {colorStatus, editableColumn, invisibleColumn} from "../constants/ConfigurationColumnsConstants";
+import {formatNumber} from "../Helper/StringHelper";
 
 
 export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): ColDef[] {
@@ -40,6 +41,7 @@ export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): Co
                 valueParser: isNumber ? 'Number(newValue)' : null,
                 cellClass: isNumber ? 'number-cell' : null,
                 cellRenderer: renderType,
+                valueSetter: isNumber ?  params => formatNumber(params.data.number) : undefined
             }
         }
     );
