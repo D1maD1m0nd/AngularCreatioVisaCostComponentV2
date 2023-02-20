@@ -38,7 +38,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .number-cell {
     text-align: right;
 }
-
+.number-cell-footer-bold {
+    background: #aeaeb6;
+    font-weight: bold;
+}
 .selection-positive {
     background: aquamarine;
 }

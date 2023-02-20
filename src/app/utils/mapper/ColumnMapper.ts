@@ -19,6 +19,7 @@ export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): Co
                 }
                 return null;
             }
+
             const renderType = cellRender();
             return <ColDef>{
                 cellStyle: params => {
@@ -39,7 +40,17 @@ export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): Co
                 aggFunc: isNumber ? 'sum' : null,
                 hide: isInvisible,
                 valueParser: isNumber ? 'Number(newValue)' : null,
-                cellClass: isNumber ? 'number-cell' : null,
+                cellClass: params => {
+                    const isFooter = params.node.footer;
+                    if (isFooter) {
+                        return 'number-cell-footer-bold';
+                    }
+                    if(isNumber){
+                        return 'number-cell';
+                    }
+
+                    return null;
+                },
                 cellRenderer: renderType,
                 valueFormatter: params => {
 
