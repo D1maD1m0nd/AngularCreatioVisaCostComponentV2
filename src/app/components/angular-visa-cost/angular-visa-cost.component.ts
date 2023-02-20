@@ -17,6 +17,7 @@ import {IMetaData} from "../../data/model/response/MetaData";
 import {CheckboxRenderComponent} from "../checkbox-render-component/checkbox-render.component";
 import {ISummaryData} from "../../data/model/response/SummaryData";
 import {BridgeServiceService} from "../../services/bridge-service.service";
+import {formatNumber} from "../../utils/Helper/StringHelper";
 @Component({
     selector: 'app-angular-visa-cost',
     templateUrl: './angular-visa-cost.component.html',
