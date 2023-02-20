@@ -4,6 +4,8 @@ import {ApiClientService} from "../../services/api-client.service";
 import {
     MatSnackBar,
 } from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import {InformationDialogComponent} from "../information-dialog/information-dialog.component";
 @Component({
     selector: 'app-saved-group-visa',
     templateUrl: './saved-group-visa.component.html',
@@ -14,12 +16,17 @@ export class SavedGroupVisaComponent implements OnInit {
     @Input("Year") Year: string
     @Input("Brand") Brand: string
 
-    constructor(private apiClient: ApiClientService, private _snackBar: MatSnackBar) {
+    constructor(private apiClient: ApiClientService, private _snackBar: MatSnackBar, public dialog: MatDialog) {
     }
-
+    openDialog(): void {
+        this.dialog.open(InformationDialogComponent, {
+            width: '350px'
+        });
+    }
     approveSavedData() {
         this.apiClient.UpdateRecordsDetailBudgetSum(this.ICostVisaItem).subscribe(i => {
             console.log(i);
+            this.openDialog()
             this.openSnackBar("Сохранение прошло успешно");
         });
         console.log(this.ICostVisaItem);

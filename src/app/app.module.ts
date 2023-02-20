@@ -18,7 +18,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { HeaderTotalBudgetComponent } from './components/header-total-budget/header-total-budget.component';
 import { HeaderContainerComponent } from './components/header-container/header-container.component';
-
+import { InformationDialogComponent } from './components/information-dialog/information-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
     declarations: [
         VltVisaCostComponent,
@@ -28,6 +29,7 @@ import { HeaderContainerComponent } from './components/header-container/header-c
         CheckboxRenderComponent,
         HeaderTotalBudgetComponent,
         HeaderContainerComponent,
+        InformationDialogComponent,
     ],
     imports: [
         BrowserModule,
@@ -38,7 +40,8 @@ import { HeaderContainerComponent } from './components/header-container/header-c
         MatToolbarModule,
         MatIconModule,
         MatCheckboxModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatDialogModule
     ],
     providers: [CookieService],
     //пере сборкой компонента необхожимо закомментировать bootstrap Блок
