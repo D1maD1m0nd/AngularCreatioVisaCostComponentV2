@@ -7,7 +7,6 @@ import {
 import {MatDialog} from '@angular/material/dialog';
 import {InformationDialogComponent} from "../information-dialog/information-dialog.component";
 import {BridgeServiceService} from "../../services/bridge-service.service";
-import {ICostVisaSaveItem} from "../../data/model/request/ICostVisaSaveItem";
 @Component({
     selector: 'app-saved-group-visa',
     templateUrl: './saved-group-visa.component.html',
