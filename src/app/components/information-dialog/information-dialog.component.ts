@@ -11,5 +11,13 @@ export class InformationDialogComponent implements OnInit {
 
     ngOnInit(): void {
     }
+    onYesClick(): void {
+        console.log('Yes clicked');
+        this.dialogRef.close(true);
+    }
 
+    onNoClick(): void {
+        console.log('No clicked');
+        this.dialogRef.close(false);
+    }
 }

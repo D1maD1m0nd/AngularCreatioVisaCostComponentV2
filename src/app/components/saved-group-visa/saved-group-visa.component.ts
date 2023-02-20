@@ -19,8 +19,16 @@ export class SavedGroupVisaComponent implements OnInit {
     constructor(private apiClient: ApiClientService, private _snackBar: MatSnackBar, public dialog: MatDialog) {
     }
     openDialog(): void {
-        this.dialog.open(InformationDialogComponent, {
+        const dialogRef = this.dialog.open(InformationDialogComponent, {
             width: '350px'
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                console.log('User clicked Yes');
+            } else {
+                console.log('User clicked No');
+            }
         });
     }
     approveSavedData() {
@@ -41,7 +49,9 @@ export class SavedGroupVisaComponent implements OnInit {
     }
 
     openSnackBar(message: string) {
-        this._snackBar.open(message);
+        this._snackBar.open(message, 'OK', {
+            duration: 5000 // Закрыть через 5 секунд
+        });
     }
 
     ngOnInit(): void {

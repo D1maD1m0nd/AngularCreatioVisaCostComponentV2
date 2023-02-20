@@ -3,6 +3,12 @@
     сть не согласованные Визы. Вы действительно хотите отправить изменения?
 </div>
 <div mat-dialog-actions>
-    <button mat-button mat-dialog-close>Нет</button>
-    <button mat-button mat-dialog-close cdkFocusInitial>Да</button>
+    <button
+        mat-button
+        (click)="onNoClick()">
+        Нет</button>
+    <button mat-button
+            cdkFocusInitial
+            (click)="onYesClick()">
+        Да</button>
 </div>
