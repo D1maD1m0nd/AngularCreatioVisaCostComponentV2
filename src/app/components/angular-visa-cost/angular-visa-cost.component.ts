@@ -16,6 +16,7 @@ import {ToColumnDefArr} from "../../utils/mapper/ColumnMapper";
 import {IMetaData} from "../../data/model/response/MetaData";
 import {CheckboxRenderComponent} from "../checkbox-render-component/checkbox-render.component";
 import {ISummaryData} from "../../data/model/response/SummaryData";
+import {BridgeServiceService} from "../../services/bridge-service.service";
 @Component({
     selector: 'app-angular-visa-cost',
     templateUrl: './angular-visa-cost.component.html',
@@ -45,10 +46,14 @@ export class AngularVisaCostComponent implements OnInit {
     public rowDataCostItem!: ICostItem[];
     public metaData: IMetaData
     public summaryData: ISummaryData
-    constructor(private apiClient: ApiClientService) {
+    constructor(private apiClient: ApiClientService,
+                private bridgeService: BridgeServiceService) {
         this.frameworkComponents = {
             checkboxRenderer: CheckboxRenderComponent
         };
+        bridgeService.IsApproveButton$.subscribe(i => {
+
+        });
     }
 
     onGridReady(params: GridReadyEvent<ICostItem>) {
@@ -83,7 +88,7 @@ export class AngularVisaCostComponent implements OnInit {
         console.log(event)
     }
     ngOnInit(): void {
-    }
 
+    }
 
 }

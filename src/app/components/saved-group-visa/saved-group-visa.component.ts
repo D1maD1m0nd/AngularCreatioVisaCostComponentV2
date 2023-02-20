@@ -6,6 +6,8 @@ import {
 } from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
 import {InformationDialogComponent} from "../information-dialog/information-dialog.component";
+import {BridgeServiceService} from "../../services/bridge-service.service";
+import {ICostVisaSaveItem} from "../../data/model/request/ICostVisaSaveItem";
 @Component({
     selector: 'app-saved-group-visa',
     templateUrl: './saved-group-visa.component.html',
@@ -16,33 +18,45 @@ export class SavedGroupVisaComponent implements OnInit {
     @Input("Year") Year: string
     @Input("Brand") Brand: string
 
-    constructor(private apiClient: ApiClientService, private _snackBar: MatSnackBar, public dialog: MatDialog) {
+    constructor(private apiClient: ApiClientService,
+                private bridgeService: BridgeServiceService,
+                private _snackBar: MatSnackBar,
+                public dialog: MatDialog,
+                ) {
     }
-    openDialog(): void {
+    openDialog(callback: () => void): void {
         const dialogRef = this.dialog.open(InformationDialogComponent, {
             width: '350px'
         });
-
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
                 console.log('User clicked Yes');
+                callback()
             } else {
                 console.log('User clicked No');
             }
         });
     }
     approveSavedData() {
-        this.apiClient.UpdateRecordsDetailBudgetSum(this.ICostVisaItem).subscribe(i => {
-            console.log(i);
-            this.openDialog()
-            this.openSnackBar("Сохранение прошло успешно");
-        });
-        console.log(this.ICostVisaItem);
+        const callback = () => {
+            this.apiClient.UpdateRecordsDetailBudgetSum(this.ICostVisaItem).subscribe(i => {
+                console.log(i);
+                this.bridgeService.IsApproveButton$.next(true);
+                this.openSnackBar("Сохранение прошло успешно");
+            });
+        }
+        const count = this.ICostVisaItem.length;
+        const approveCount = this.ICostVisaItem.filter(i => i.IsAproveBrendManager);
+        if(count != approveCount.length) {
+            this.openDialog(callback)
+        } else {
+            callback();
+        }
+
     }
 
     sendSavedData() {
         this.apiClient.UpdateCostVisa(this.ICostVisaItem).subscribe(i => {
-            console.log(i);
             this.openSnackBar("Сохранение прошло успешно");
         });
         console.log(this.ICostVisaItem);
