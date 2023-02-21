@@ -86,7 +86,7 @@ export class AngularVisaCostComponent implements OnInit {
     }
 
     onCellValueChanged(event: CellValueChangedEvent) {
-
+        this.apiClient.AddUpdateItem(event.data);
     }
 
     ngOnInit(): void {

@@ -41,7 +41,7 @@ export class SavedGroupVisaComponent implements OnInit {
 
     approveSavedData() {
         const callback = () => {
-            this.apiClient.UpdateRecordsDetailBudgetSum(this.ICostVisaItem).subscribe(i => {
+            this.apiClient.UpdateRecordsDetailBudgetSum().subscribe(i => {
                 console.log(i);
                 this.bridgeService.IsApproveButton$.next(true);
                 this.openSnackBar("Сохранение прошло успешно");
@@ -58,7 +58,7 @@ export class SavedGroupVisaComponent implements OnInit {
     }
 
     sendSavedData() {
-        this.apiClient.UpdateCostVisa(this.ICostVisaItem).subscribe(i => {
+        this.apiClient.UpdateCostVisa().subscribe(i => {
             this.openSnackBar("Сохранение прошло успешно");
         });
         console.log(this.ICostVisaItem);
