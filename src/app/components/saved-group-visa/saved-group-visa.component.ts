@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ICostItem} from "../../data/model/response/ItemCost";
 import {ApiClientService} from "../../services/api-client.service";
 import {
-    MatSnackBar,
+    MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
 import {InformationDialogComponent} from "../information-dialog/information-dialog.component";
@@ -13,6 +13,8 @@ import {BridgeServiceService} from "../../services/bridge-service.service";
     styleUrls: ['./saved-group-visa.component.scss']
 })
 export class SavedGroupVisaComponent implements OnInit {
+    private horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+    private verticalPosition: MatSnackBarVerticalPosition = 'top';
     @Input("ICostVisaItems") ICostVisaItem: ICostItem[]
     @Input("Year") Year: string
     @Input("Brand") Brand: string
@@ -63,7 +65,9 @@ export class SavedGroupVisaComponent implements OnInit {
 
     openSnackBar(message: string) {
         this._snackBar.open(message, 'OK', {
-            duration: 5000 // Закрыть через 5 секунд
+            duration: 5000, // Закрыть через 5 секунд
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
         });
     }
 

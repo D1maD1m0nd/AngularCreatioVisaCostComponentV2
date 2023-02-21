@@ -9,6 +9,7 @@ export const invisibleColumn: string[] = [
 ]
 
 export const editableColumn: string[] = [
+    "TotalYearNewSum",
     "FirstQuarterNewSum",
     "SecondQuarterNewSum",
     "ThirdQuarterNewSum",
