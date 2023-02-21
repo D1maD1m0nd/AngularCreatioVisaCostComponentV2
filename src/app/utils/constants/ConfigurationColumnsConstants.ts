@@ -16,7 +16,9 @@ export const editableColumn: string[] = [
     "FourthQuarterNewSum"
 ]
 
-
+export const aggGetterColumns: string[] = [
+    "DeltaStarterPlan"
+]
 export const colorStatus = {
     Positive: {background: 'aquamarine'},
     Negative: {background: 'rgba(255, 51, 144, 0.32)'}

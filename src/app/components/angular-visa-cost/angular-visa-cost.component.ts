@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {
     CellEditingStartedEvent,
-    CellEditingStoppedEvent, CellValueChangedEvent,
+    CellEditingStoppedEvent,
+    CellValueChangedEvent,
     ColDef,
     DomLayoutType,
     GridReadyEvent,
@@ -17,6 +18,7 @@ import {IMetaData} from "../../data/model/response/MetaData";
 import {CheckboxRenderComponent} from "../checkbox-render-component/checkbox-render.component";
 import {ISummaryData} from "../../data/model/response/SummaryData";
 import {BridgeServiceService} from "../../services/bridge-service.service";
+
 @Component({
     selector: 'app-angular-visa-cost',
     templateUrl: './angular-visa-cost.component.html',
@@ -46,6 +48,7 @@ export class AngularVisaCostComponent implements OnInit {
     public rowDataCostItem!: ICostItem[];
     public metaData: IMetaData
     public summaryData: ISummaryData
+
     constructor(private apiClient: ApiClientService,
                 private bridgeService: BridgeServiceService) {
         this.frameworkComponents = {
@@ -67,26 +70,25 @@ export class AngularVisaCostComponent implements OnInit {
     }
 
     onRowEditingStarted(event: RowEditingStartedEvent) {
-        console.log('never called - not doing row editing');
+
     }
 
     onRowEditingStopped(event: RowEditingStoppedEvent) {
-        console.log('never called - not doing row editing');
+
     }
 
     onCellEditingStarted(event: CellEditingStartedEvent) {
-        console.log('cellEditingStarted');
+
     }
 
     onCellEditingStopped(event: CellEditingStoppedEvent) {
-        console.log('cellEditingStopped');
-        console.log(event)
+
     }
 
     onCellValueChanged(event: CellValueChangedEvent) {
-        console.log('cellEditingStopped');
-        console.log(event)
+
     }
+
     ngOnInit(): void {
 
     }

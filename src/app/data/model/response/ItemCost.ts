@@ -21,6 +21,8 @@ export interface ICostItem {
     FourthQuarterPlanSumBranch: number
     TotalSumPlan: number
     TotalSumPlanYearBranch: number
+    DeltaChanged: number
+    DeltaStarterPlan: number
     DetailBudgetId: string
     YearName: string
     VisaId: string

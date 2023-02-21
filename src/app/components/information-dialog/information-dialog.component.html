@@ -4,11 +4,13 @@
 </div>
 <div mat-dialog-actions>
     <button
-        mat-button
-        (click)="onNoClick()">
-        Нет</button>
-    <button mat-button
+        (click)="onNoClick()"
+        mat-button>
+        Нет
+    </button>
+    <button (click)="onYesClick()"
             cdkFocusInitial
-            (click)="onYesClick()">
-        Да</button>
+            mat-button>
+        Да
+    </button>
 </div>

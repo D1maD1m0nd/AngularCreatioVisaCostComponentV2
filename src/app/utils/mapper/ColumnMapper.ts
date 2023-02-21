@@ -1,8 +1,12 @@
 import {ICostColumn} from "../../data/model/response/CostColumn";
-import {CellClassParams, ColDef, ValueFormatterParams} from "ag-grid-community";
-import {colorStatus, editableColumn, invisibleColumn} from "../constants/ConfigurationColumnsConstants";
+import {CellClassParams, ColDef, ValueFormatterParams, ValueGetterParams} from "ag-grid-community";
+import {
+    aggGetterColumns,
+    colorStatus,
+    editableColumn,
+    invisibleColumn
+} from "../constants/ConfigurationColumnsConstants";
 import {formatNumber} from "../Helper/StringHelper";
-import {ICostItem} from "../../data/model/response/ItemCost";
 
 
 export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): ColDef[] {
@@ -12,29 +16,52 @@ export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): Co
             const isBoolean = typeof instance[i.ItemCostKey] == 'boolean';
             const isInvisible = invisibleColumn.includes(i.ItemCostKey);
             const isEditable = editableColumn.includes(i.ItemCostKey);
-
-            return <ColDef>{
-                cellStyle: params => getCellStyle(params),
-                field: i.ItemCostKey,
-                headerName: i.Name,
-                editable: isEditable,
-                enableRowGroup: isString,
-                filter: isString ? 'agSetColumnFilter' : null,
-                aggFunc: isNumber ? 'sum' : null,
-                hide: isInvisible,
-                valueParser: isNumber ? 'Number(newValue)' : null,
-                cellClass: params => getCellClass(params, isNumber),
-                cellRenderer: getCellRender(isNumber, isBoolean),
-                valueFormatter: params => getValueFormatter(params, i, isNumber)
-            }
+            const isAggGetter = aggGetterColumns.includes(i.ItemCostKey);
+            return getColDef(isString, isNumber, isBoolean, isInvisible, isEditable, isAggGetter, i);
         }
     );
 }
 
-function getValueGetter() {
+function getColDef(isString: boolean,
+                   isNumber: boolean,
+                   isBoolean: boolean,
+                   isInvisible: boolean,
+                   isEditable: boolean,
+                   isAggGetter: boolean,
+                   item: ICostColumn): ColDef {
 
+    const colDef = <ColDef>{
+        cellStyle: params => getCellStyle(params),
+        cellClass: params => getCellClass(params, isNumber),
+        valueFormatter: params => getValueFormatter(params, item, isNumber),
+        field: item.ItemCostKey,
+        headerName: item.Name,
+        editable: isEditable,
+        enableRowGroup: isString,
+        filter: isString ? 'agSetColumnFilter' : null,
+        aggFunc: isNumber ? 'sum' : null,
+        hide: isInvisible,
+        valueParser: isNumber ? params => Number(params.newValue) : null,
+        cellRenderer: getCellRender(isNumber, isBoolean),
+    };
+    if (isAggGetter) {
+        colDef.valueGetter = params => getValueGetter(item.ItemCostKey, params);
+    }
+    return colDef;
 }
-function getCellRender(isNumber : boolean, isBoolean : boolean) {
+
+function getValueGetter(key: string, params: ValueGetterParams<any>) {
+    switch (key) {
+        case "DeltaStarterPlan":
+            const newSum = params.data.FirstQuarterNewSum + params.data.SecondQuarterNewSum + params.data.ThirdQuarterNewSum + params.data.FourthQuarterNewSum;
+            return newSum;
+        default:
+            console.log(params);
+            return params.data[key];
+    }
+}
+
+function getCellRender(isNumber: boolean, isBoolean: boolean) {
     if (isNumber) {
         return 'agAnimateShowChangeCellRenderer';
     } else if (isBoolean) {
@@ -42,7 +69,8 @@ function getCellRender(isNumber : boolean, isBoolean : boolean) {
     }
     return null;
 }
-function getCellStyle(params: CellClassParams<any, any>, ) {
+
+function getCellStyle(params: CellClassParams<any, any>,) {
     if (params.data) {
         if (params.data.TotalSumPlanYearBranch < params.data.TotalSumPlan) {
             return colorStatus.Positive;
@@ -52,25 +80,20 @@ function getCellStyle(params: CellClassParams<any, any>, ) {
     }
     return null
 }
-function getCellClass(params: CellClassParams<any, any>, isNumber : boolean) {
+
+function getCellClass(params: CellClassParams<any, any>, isNumber: boolean) {
     const isFooter = params.node.footer;
     if (isFooter) {
         return 'number-cell-footer-bold';
     }
-    if(isNumber){
+    if (isNumber) {
         return 'number-cell';
     }
 
     return null;
 }
-function getValueFormatter(params: ValueFormatterParams<any, any>, item : ICostColumn, isNumber : boolean) {
-    if(params.node?.leafGroup && params.node.group && params.value && typeof params.value == "number") {
-        //console.log(params.node)
-        return formatNumber(params.value);
-    }
-    if(isNumber && params.data) {
-        const value = params.data[item.ItemCostKey];
-        return formatNumber(value);
-    }
-    return null;
+
+function getValueFormatter(params: ValueFormatterParams<any, any>, item: ICostColumn, isNumber: boolean) {
+    const value = params.value;
+    return formatNumber(value);
 }

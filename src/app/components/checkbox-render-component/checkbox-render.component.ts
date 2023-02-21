@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ICellRendererAngularComp} from "ag-grid-angular";
 import {ICellRendererParams} from "ag-grid-community";
-import {editableColumn} from "../../utils/constants/ConfigurationColumnsConstants";
 
 @Component({
     selector: 'app-checkbox-render-component',
@@ -11,15 +10,16 @@ import {editableColumn} from "../../utils/constants/ConfigurationColumnsConstant
 export class CheckboxRenderComponent implements OnInit, ICellRendererAngularComp, OnDestroy {
     editingColumnKey = "IsAproveBrendManager"
     public params: any;
-    public isEdit : boolean = false
+    public isEdit: boolean = false
+
+    constructor() {
+    }
 
     public set isEditSet(value: boolean) {
         const key = this.params.colDef.field;
-        if(key == this.editingColumnKey && !this.isEdit) {
+        if (key == this.editingColumnKey && !this.isEdit) {
             this.isEdit = value;
         }
-    }
-    constructor() {
     }
 
     ngOnInit(): void {
@@ -39,8 +39,8 @@ export class CheckboxRenderComponent implements OnInit, ICellRendererAngularComp
         let colId = this.params.column.colId;
         console.log(this.params)
         this.isEditSet = checked
-        if(this.params.node.childrenAfterSort) {
-            this.params.node.childrenAfterSort.forEach((i : any) => {
+        if (this.params.node.childrenAfterSort) {
+            this.params.node.childrenAfterSort.forEach((i: any) => {
                 i.setDataValue(colId, checked);
             });
         }

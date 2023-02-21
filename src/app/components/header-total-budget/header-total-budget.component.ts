@@ -7,7 +7,8 @@ import {ISummaryData} from "../../data/model/response/SummaryData";
     styleUrls: ['./header-total-budget.component.scss']
 })
 export class HeaderTotalBudgetComponent implements OnInit {
-    @Input("summary-data") summaryData : ISummaryData
+    @Input("summary-data") summaryData: ISummaryData
+
     constructor() {
     }
 

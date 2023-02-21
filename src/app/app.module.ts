@@ -16,10 +16,11 @@ import {createCustomElement} from "@angular/elements";
 import {CheckboxRenderComponent,} from './components/checkbox-render-component/checkbox-render.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import { HeaderTotalBudgetComponent } from './components/header-total-budget/header-total-budget.component';
-import { HeaderContainerComponent } from './components/header-container/header-container.component';
-import { InformationDialogComponent } from './components/information-dialog/information-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import {HeaderTotalBudgetComponent} from './components/header-total-budget/header-total-budget.component';
+import {HeaderContainerComponent} from './components/header-container/header-container.component';
+import {InformationDialogComponent} from './components/information-dialog/information-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
+
 @NgModule({
     declarations: [
         VltVisaCostComponent,

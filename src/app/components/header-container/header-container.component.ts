@@ -11,7 +11,8 @@ export class HeaderContainerComponent implements OnInit {
     @Input("ICostVisaItems") ICostVisaItems: ICostItem[]
     @Input("Year") Year: string
     @Input("Brand") Brand: string
-    @Input("summary-data") SummaryData : ISummaryData
+    @Input("summary-data") SummaryData: ISummaryData
+
     constructor() {
     }
 
