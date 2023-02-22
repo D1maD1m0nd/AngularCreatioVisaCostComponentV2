@@ -4,7 +4,7 @@ import {
     CellEditingStoppedEvent,
     CellValueChangedEvent,
     ColDef,
-    DomLayoutType,
+    DomLayoutType, GridApi,
     GridReadyEvent,
     RowEditingStartedEvent,
     RowEditingStoppedEvent,
@@ -26,7 +26,8 @@ import {IVisaRepository} from "../../repository/IVisaRepository";
     styleUrls: ['./angular-visa-cost.component.scss']
 })
 export class AngularVisaCostComponent implements OnInit {
-    repository: IVisaRepository
+    private lastEditingSum : number
+    private repository: IVisaRepository
     @Input('year') year: string
     @Input("brand") brand: string
     @Input("filial") filial: string
@@ -75,7 +76,6 @@ export class AngularVisaCostComponent implements OnInit {
     }
 
     onRowEditingStarted(event: RowEditingStartedEvent) {
-
     }
 
     onRowEditingStopped(event: RowEditingStoppedEvent) {
@@ -83,7 +83,10 @@ export class AngularVisaCostComponent implements OnInit {
     }
 
     onCellEditingStarted(event: CellEditingStartedEvent) {
-
+        if(event.node.group) {
+            this.lastEditingSum = event.value
+        }
+        console.log("onCellEditingStarted");
     }
 
     onCellEditingStopped(event: CellEditingStoppedEvent) {
@@ -91,6 +94,21 @@ export class AngularVisaCostComponent implements OnInit {
     }
 
     onCellValueChanged(event: CellValueChangedEvent) {
+        if(event.node.group) {
+            const sum = event.data.TotalYearNewSum;
+            event.node.allLeafChildren.forEach(i => {
+                let result = 0;
+                let value = i.data.TotalYearNewSum;
+                if(value) {
+                    const shareSum = this.lastEditingSum / i.data.TotalYearNewSum;
+                    result = sum / shareSum;
+                } else {
+                    //TODO спросить если одна из строк является 0 как ее считать
+                    result = sum / event.node.allLeafChildren.length;
+                }
+                i.setDataValue("TotalYearNewSum",result);
+            });
+        }
         this.repository.AddUpdateItem(event.data);
     }
 
