@@ -78,6 +78,9 @@ function getCellRender(isNumber: boolean, isBoolean: boolean) {
 }
 
 function getCellStyle(params: CellClassParams<any, any>,) {
+    if (params.node.group && !params.node.footer) {
+        return colorStatus.Group;
+    }
     if (params.data) {
         if (params.data.TotalSumPlanYearBranch < params.data.TotalSumPlan) {
             return colorStatus.Positive;
@@ -91,7 +94,11 @@ function getCellStyle(params: CellClassParams<any, any>,) {
 function getCellClass(params: CellClassParams<any, any>, isNumber: boolean) {
     const isFooter = params.node.footer;
     if (isFooter) {
-        return 'number-cell-footer-bold';
+        if(isNumber) {
+            return 'number-cell-footer-bold number-cell';
+        } else {
+            return 'number-cell-footer-bold';
+        }
     }
     if (isNumber) {
         return 'number-cell';
