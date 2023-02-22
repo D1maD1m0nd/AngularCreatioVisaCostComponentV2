@@ -33,7 +33,7 @@ export class ApiClientService {
         this.UpdateItems.add(item);
         console.log(this.UpdateItems);
     }
-    UpdateRecordsDetailBudgetSum() {
+    UpdateRecordsDetailBudgetSum() : Observable<any>{
         let url;
         if (environment.buildType == BuildTypes.CREATIO) {
             url = `${this.BASE_URL}/rest/VisaCostItemWebService/UpdateRecordsDetailBudgetSum`;
@@ -72,7 +72,7 @@ export class ApiClientService {
         );
     }
 
-    GetVisaSummary(YearId: string | null, BrandId: string | null, filial: string | null): Observable<IVisaCostSummary> {
+    GetVisaSummary(YearId: string | null, BrandId: string | null, filial: string | null, TableVisaId: string | null): Observable<IVisaCostSummary> {
         let url;
         console.log()
         if (environment.buildType == BuildTypes.CREATIO) {
@@ -83,7 +83,8 @@ export class ApiClientService {
         const data: ICostVisaRequestData = {
             yearBudgetId: YearId,
             brandBudgetId: BrandId,
-            filialId: filial
+            filialId: filial,
+            tableVisaId: TableVisaId
         };
         const headers = this.GetHeaders();
         return this.http.post<IVisaCostSummary>(

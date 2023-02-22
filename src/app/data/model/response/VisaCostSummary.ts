@@ -9,4 +9,5 @@ export interface IVisaCostSummary {
     MetaData: IMetaData
     SummaryData: ISummaryData
     Error: string | null
+    TableVisaId: string
 }
