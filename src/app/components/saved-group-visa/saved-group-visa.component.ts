@@ -5,6 +5,9 @@ import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition,
 import {MatDialog} from '@angular/material/dialog';
 import {InformationDialogComponent} from "../information-dialog/information-dialog.component";
 import {BridgeServiceService} from "../../services/bridge-service.service";
+import {DialogTypeEnum} from "../../utils/constants/DialogTypeEnum";
+import {IVisaRepository} from "../../repository/IVisaRepository";
+import {VisaRepository} from "../../repository/VisaRepository";
 
 @Component({
     selector: 'app-saved-group-visa',
@@ -12,22 +15,27 @@ import {BridgeServiceService} from "../../services/bridge-service.service";
     styleUrls: ['./saved-group-visa.component.scss']
 })
 export class SavedGroupVisaComponent implements OnInit {
+    private repository: IVisaRepository
     @Input("ICostVisaItems") ICostVisaItem: ICostItem[]
     @Input("Year") Year: string
     @Input("Brand") Brand: string
     private horizontalPosition: MatSnackBarHorizontalPosition = 'center';
     private verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-    constructor(private apiClient: ApiClientService,
+    constructor(repository: VisaRepository,
                 private bridgeService: BridgeServiceService,
                 private _snackBar: MatSnackBar,
                 public dialog: MatDialog,
     ) {
+        this.repository = repository;
     }
 
-    openDialog(callback: () => void): void {
+    openDialog(type : DialogTypeEnum, callback: () => void): void {
         const dialogRef = this.dialog.open(InformationDialogComponent, {
-            width: '350px'
+            width: '750px',
+            data: {
+                Type: type
+            }
         });
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
@@ -41,7 +49,7 @@ export class SavedGroupVisaComponent implements OnInit {
 
     approveSavedData() {
         const callback = () => {
-            this.apiClient.UpdateRecordsDetailBudgetSum().subscribe(i => {
+            this.repository.UpdateRecordsDetailBudgetSum().subscribe(i => {
                 console.log(i);
                 this.bridgeService.IsApproveButton$.next(true);
                 this.openSnackBar("Сохранение прошло успешно");
@@ -50,7 +58,7 @@ export class SavedGroupVisaComponent implements OnInit {
         const count = this.ICostVisaItem.length;
         const approveCount = this.ICostVisaItem.filter(i => i.IsAproveBrendManager);
         if (count != approveCount.length) {
-            this.openDialog(callback)
+            this.openDialog(DialogTypeEnum.SAVES_DIALOG, callback)
         } else {
             callback();
         }
@@ -58,12 +66,18 @@ export class SavedGroupVisaComponent implements OnInit {
     }
 
     sendSavedData() {
-        this.apiClient.UpdateCostVisa().subscribe(i => {
+        this.repository.UpdateCostVisa().subscribe(i => {
             this.openSnackBar("Сохранение прошло успешно");
         });
         console.log(this.ICostVisaItem);
     }
-
+    closeWindow() {
+        const callback = () => {
+            // this.repository.SaveDataToLocalStore().subscribe(i => {
+            // });
+        }
+        this.openDialog(DialogTypeEnum.CLOSED_DIALOG, callback);
+    }
     openSnackBar(message: string) {
         this._snackBar.open(message, 'OK', {
             duration: 5000, // Закрыть через 5 секунд

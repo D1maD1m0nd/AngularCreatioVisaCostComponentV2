@@ -21,6 +21,7 @@ import {HeaderContainerComponent} from './components/header-container/header-con
 import {InformationDialogComponent} from './components/information-dialog/information-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {LocalStorageService} from "./services/local-storage.service";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import {LocalStorageService} from "./services/local-storage.service";
         MatIconModule,
         MatCheckboxModule,
         MatSnackBarModule,
-        MatDialogModule
+        MatDialogModule,
+        MatTooltipModule
     ],
     providers: [
         { provide: 'LOCAL_STORAGE', useValue: window.localStorage },
