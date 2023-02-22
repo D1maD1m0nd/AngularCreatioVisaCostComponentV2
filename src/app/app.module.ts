@@ -48,7 +48,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         MatTooltipModule
     ],
     providers: [
-        { provide: 'LOCAL_STORAGE', useValue: window.localStorage },
+        {provide: 'LOCAL_STORAGE', useValue: window.localStorage},
         LocalStorageService,
         CookieService],
     //пере сборкой компонента необхожимо закомментировать bootstrap Блок

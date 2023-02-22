@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ICostItem} from "../../data/model/response/ItemCost";
-import {ApiClientService} from "../../services/api-client.service";
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition,} from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
 import {InformationDialogComponent} from "../information-dialog/information-dialog.component";
@@ -15,10 +14,10 @@ import {VisaRepository} from "../../repository/VisaRepository";
     styleUrls: ['./saved-group-visa.component.scss']
 })
 export class SavedGroupVisaComponent implements OnInit {
-    private repository: IVisaRepository
     @Input("ICostVisaItems") ICostVisaItem: ICostItem[]
     @Input("Year") Year: string
     @Input("Brand") Brand: string
+    private repository: IVisaRepository
     private horizontalPosition: MatSnackBarHorizontalPosition = 'center';
     private verticalPosition: MatSnackBarVerticalPosition = 'top';
 
@@ -30,7 +29,7 @@ export class SavedGroupVisaComponent implements OnInit {
         this.repository = repository;
     }
 
-    openDialog(type : DialogTypeEnum, callback: () => void): void {
+    openDialog(type: DialogTypeEnum, callback: () => void): void {
         const dialogRef = this.dialog.open(InformationDialogComponent, {
             width: '750px',
             data: {
@@ -71,6 +70,7 @@ export class SavedGroupVisaComponent implements OnInit {
         });
         console.log(this.ICostVisaItem);
     }
+
     closeWindow() {
         const callback = () => {
             // this.repository.SaveDataToLocalStore().subscribe(i => {
@@ -78,6 +78,7 @@ export class SavedGroupVisaComponent implements OnInit {
         }
         this.openDialog(DialogTypeEnum.CLOSED_DIALOG, callback);
     }
+
     openSnackBar(message: string) {
         this._snackBar.open(message, 'OK', {
             duration: 5000, // Закрыть через 5 секунд

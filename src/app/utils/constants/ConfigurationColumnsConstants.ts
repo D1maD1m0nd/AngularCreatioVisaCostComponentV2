@@ -20,7 +20,7 @@ export const aggGetterColumns: string[] = [
     "DeltaChanged"
 ]
 export const colorStatus = {
-    Group: {background:  'rgb(206,202,202)'},
+    Group: {background: 'rgb(206,202,202)'},
     Positive: {background: 'aquamarine'},
     Negative: {background: 'rgba(255, 51, 144, 0.32)'}
 }

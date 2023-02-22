@@ -9,8 +9,8 @@ import {Injectable} from "@angular/core";
 @Injectable({
     providedIn: 'root'
 })
-export class VisaRepository implements IVisaRepository{
-    constructor(private apiService : ApiClientService, private storageService : LocalStorageService) {
+export class VisaRepository implements IVisaRepository {
+    constructor(private apiService: ApiClientService, private storageService: LocalStorageService) {
     }
 
     AddUpdateItem(item: ICostItem): void {

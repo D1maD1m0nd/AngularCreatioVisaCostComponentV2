@@ -94,7 +94,7 @@ function getCellStyle(params: CellClassParams<any, any>,) {
 function getCellClass(params: CellClassParams<any, any>, isNumber: boolean) {
     const isFooter = params.node.footer;
     if (isFooter) {
-        if(isNumber) {
+        if (isNumber) {
             return 'number-cell-footer-bold number-cell';
         } else {
             return 'number-cell-footer-bold';

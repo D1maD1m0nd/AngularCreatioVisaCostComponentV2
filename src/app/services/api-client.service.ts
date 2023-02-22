@@ -17,6 +17,7 @@ export class ApiClientService {
     BASE_URL = environment.apiUrl
     BPM_CSRF_TOKEN: string
     private UpdateItems: Set<ICostItem> = new Set();
+
     constructor(
         private http: HttpClient,
         private errorService: ErrorService,
@@ -29,11 +30,13 @@ export class ApiClientService {
             console.log(token);
         }
     }
-    AddUpdateItem(item : ICostItem) {
+
+    AddUpdateItem(item: ICostItem) {
         this.UpdateItems.add(item);
         console.log(this.UpdateItems);
     }
-    UpdateRecordsDetailBudgetSum() : Observable<any>{
+
+    UpdateRecordsDetailBudgetSum(): Observable<any> {
         let url;
         if (environment.buildType == BuildTypes.CREATIO) {
             url = `${this.BASE_URL}/rest/VisaCostItemWebService/UpdateRecordsDetailBudgetSum`;

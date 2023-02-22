@@ -13,6 +13,7 @@ export class InformationDialogComponent implements OnInit {
     DialogTypeEnum = DialogTypeEnum
     positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
     position = new FormControl(this.positionOptions[0]);
+
     constructor(public dialogRef: MatDialogRef<InformationDialogComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: any) {
         console.log(DialogTypeEnum.CLOSED_DIALOG == data.Type)
