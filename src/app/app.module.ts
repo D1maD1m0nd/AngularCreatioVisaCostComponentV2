@@ -20,6 +20,7 @@ import {HeaderTotalBudgetComponent} from './components/header-total-budget/heade
 import {HeaderContainerComponent} from './components/header-container/header-container.component';
 import {InformationDialogComponent} from './components/information-dialog/information-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import {LocalStorageService} from "./services/local-storage.service";
 
 @NgModule({
     declarations: [
@@ -44,7 +45,10 @@ import {MatDialogModule} from '@angular/material/dialog';
         MatSnackBarModule,
         MatDialogModule
     ],
-    providers: [CookieService],
+    providers: [
+        { provide: 'LOCAL_STORAGE', useValue: window.localStorage },
+        LocalStorageService,
+        CookieService],
     //пере сборкой компонента необхожимо закомментировать bootstrap Блок
     bootstrap: [VltVisaCostComponent],
     entryComponents: [AngularVisaCostComponent]

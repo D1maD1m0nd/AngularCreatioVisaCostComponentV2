@@ -17,7 +17,7 @@ export const editableColumn: string[] = [
 ]
 
 export const aggGetterColumns: string[] = [
-    "DeltaStarterPlan"
+    "DeltaChanged"
 ]
 export const colorStatus = {
     Positive: {background: 'aquamarine'},

@@ -10,7 +10,7 @@ import {formatNumber} from "../Helper/StringHelper";
 
 
 export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): ColDef[] {
-    return CostItemColumn.map((i) => {
+    return CostItemColumn.map((i: ICostColumn) => {
             const isString = typeof instance[i.ItemCostKey] === 'string';
             const isNumber = typeof instance[i.ItemCostKey] === 'number';
             const isBoolean = typeof instance[i.ItemCostKey] == 'boolean';
@@ -52,9 +52,16 @@ function getColDef(isString: boolean,
 
 function getValueGetter(key: string, params: ValueGetterParams<any>) {
     switch (key) {
-        case "DeltaStarterPlan":
-            const newSum = params.data.FirstQuarterNewSum + params.data.SecondQuarterNewSum + params.data.ThirdQuarterNewSum + params.data.FourthQuarterNewSum;
-            return newSum;
+        case "DeltaChanged":
+            const newSum = params.data.FirstQuarterNewSum +
+                params.data.SecondQuarterNewSum +
+                params.data.ThirdQuarterNewSum +
+                params.data.FourthQuarterNewSum;
+            const newSumFilial = params.data.FirstQuarterPlanSumBranch +
+                params.data.SecondQuarterPlanSumBranch +
+                params.data.ThirdQuarterPlanSumBranch +
+                params.data.FourthQuarterPlanSumBranch;
+            return newSum - newSumFilial;
         default:
             console.log(params);
             return params.data[key];
