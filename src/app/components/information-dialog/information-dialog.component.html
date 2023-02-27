@@ -25,20 +25,20 @@
             (click)="onNoClick()"
             [matTooltipPosition]="position.value!"
             mat-button
-            matTooltip="Сохраняет состояние таблицы, не передавая измененные данные в CRM">
+            matTooltip="Закрытие таблицы без изменений">
+            Закрыть
+        </button>
+        <button (click)="onYesClick()"
+                [matTooltipPosition]="position.value!"
+                mat-button
+                matTooltip="Сохранение состояния таблицы и отправка изменений в CRM">
+            Сохранить и отправить
+        </button>
+        <button (click)="onYesClick()"
+                [matTooltipPosition]="position.value!"
+                mat-button
+                matTooltip="Сохранение состояния таблицы">
             Сохранить
-        </button>
-        <button (click)="onYesClick()"
-                [matTooltipPosition]="position.value!"
-                mat-button
-                matTooltip="Принять изменения и отправить их Визу">
-            Принять изменения
-        </button>
-        <button (click)="onYesClick()"
-                [matTooltipPosition]="position.value!"
-                mat-button
-                matTooltip="Принять изменения и отправить их Филиалам">
-            Отправить изменения по Филиламлам
         </button>
     </div>
 </ng-container>

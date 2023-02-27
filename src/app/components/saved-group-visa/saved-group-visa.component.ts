@@ -73,8 +73,7 @@ export class SavedGroupVisaComponent implements OnInit {
 
     closeWindow() {
         const callback = () => {
-            // this.repository.SaveDataToLocalStore().subscribe(i => {
-            // });
+            this.repository.SaveDataToLocalStore(this.ICostVisaItem);
         }
         this.openDialog(DialogTypeEnum.CLOSED_DIALOG, callback);
     }

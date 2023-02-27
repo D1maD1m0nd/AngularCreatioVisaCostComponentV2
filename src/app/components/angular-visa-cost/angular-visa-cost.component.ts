@@ -65,14 +65,13 @@ export class AngularVisaCostComponent implements OnInit {
 
     onGridReady(params: GridReadyEvent<ICostItem>) {
         console.log("grid ready")
-        this.repository
-            .GetVisaSummary(this.year, this.brand, this.filial, this.tableVisaId)
-            .subscribe((item: IVisaCostSummary) => {
-                this.metaData = item.MetaData;
-                this.summaryData = item.SummaryData;
-                this.columnDefs = ToColumnDefArr(item.CostItemColumn, item.CostItemsResult[0]);
-                this.rowDataCostItem = item.CostItemsResult;
-            });
+        this.repository.visaSummaryDataSubject.subscribe((item: IVisaCostSummary) => {
+            this.metaData = item.MetaData;
+            this.summaryData = item.SummaryData;
+            this.columnDefs = ToColumnDefArr(item.CostItemColumn, item.CostItemsResult[0]);
+            this.rowDataCostItem = item.CostItemsResult;
+        })
+        this.repository.GetVisaSummary(this.year, this.brand, this.filial, this.tableVisaId)
     }
 
     onRowEditingStarted(event: RowEditingStartedEvent) {

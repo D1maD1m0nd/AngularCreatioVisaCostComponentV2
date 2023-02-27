@@ -1,11 +1,12 @@
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {IVisaCostSummary} from "../data/model/response/VisaCostSummary";
 import {ICostItem} from "../data/model/response/ItemCost";
 
 export interface IVisaRepository {
+    visaSummaryDataSubject: Subject<IVisaCostSummary>
     UpdateRecordsDetailBudgetSum(): Observable<any>
 
-    GetVisaSummary(YearId: string | null, BrandId: string | null, Filial: string | null, TableVisaId: string | null): Observable<IVisaCostSummary>
+    GetVisaSummary(YearId: string | null, BrandId: string | null, Filial: string | null, TableVisaId: string | null): void
 
     UpdateRecordsDetailBudgetSum(): Observable<any>
 
@@ -13,5 +14,5 @@ export interface IVisaRepository {
 
     UpdateCostVisa(): Observable<any>
 
-    SaveDataToLocalStore(item: IVisaCostSummary): void
+    SaveDataToLocalStore(costVisaItems: ICostItem[]): void
 }

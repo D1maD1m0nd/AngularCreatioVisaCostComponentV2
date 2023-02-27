@@ -4,6 +4,7 @@ import {IMetaData} from "./MetaData";
 import {ISummaryData} from "./SummaryData";
 
 export interface IVisaCostSummary {
+    SaveLocal: boolean
     CostItemColumn: ICostColumn[]
     CostItemsResult: ICostItem[]
     MetaData: IMetaData

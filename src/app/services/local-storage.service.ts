@@ -1,4 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
+import {IVisaCostSummary} from "../data/model/response/VisaCostSummary";
 
 @Injectable({
     providedIn: 'root'
@@ -12,12 +13,17 @@ export class LocalStorageService {
         this.localStorage.setItem(key, JSON.stringify(value));
     }
 
-    getItem(key: string): any {
-        const value = this.localStorage.getItem(key);
-        if (value) {
-            return JSON.parse(value);
+    getItem(key: string | null): IVisaCostSummary | null {
+        if (typeof key === "string") {
+            const value = this.localStorage.getItem(key);
+            if (value) {
+                const data = JSON.parse(value);
+                if (data.SaveLocal) {
+                    return data;
+                }
+            }
         }
-        return;
+        return null;
     }
 
     removeItem(key: string): void {
