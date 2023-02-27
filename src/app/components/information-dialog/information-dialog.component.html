@@ -1,4 +1,4 @@
-<ng-container *ngIf="data.Type === DialogTypeEnum.SAVES_DIALOG">
+<ng-container *ngIf="data.Type === DialogTypeEnum.SAVED_DIALOG">
     <h1 mat-dialog-title>Внимание</h1>
     <div mat-dialog-content>
         Есть не согласованные Визы. Вы действительно хотите отправить изменения?
@@ -22,19 +22,19 @@
     </div>
     <div mat-dialog-actions>
         <button
-            (click)="onNoClick()"
+            (click)="onCloseClick()"
             [matTooltipPosition]="position.value!"
             mat-button
-            matTooltip="Закрытие таблицы без изменений">
-            Закрыть
+            matTooltip="Закрытие таблицы без сохранения изменений">
+            Не сохранять
         </button>
-        <button (click)="onYesClick()"
+        <button (click)="onSaveAndSendClick()"
                 [matTooltipPosition]="position.value!"
                 mat-button
-                matTooltip="Сохранение состояния таблицы и отправка изменений в CRM">
+                matTooltip="Отправка изменений в CRM">
             Сохранить и отправить
         </button>
-        <button (click)="onYesClick()"
+        <button (click)="onSaveClick()"
                 [matTooltipPosition]="position.value!"
                 mat-button
                 matTooltip="Сохранение состояния таблицы">

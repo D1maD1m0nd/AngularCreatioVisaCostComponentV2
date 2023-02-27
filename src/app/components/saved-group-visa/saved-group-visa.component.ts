@@ -36,12 +36,24 @@ export class SavedGroupVisaComponent implements OnInit {
                 Type: type
             }
         });
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result) {
-                console.log('User clicked Yes');
-                callback()
-            } else {
-                console.log('User clicked No');
+        dialogRef.afterClosed().subscribe((result: DialogTypeEnum) => {
+            switch (result) {
+                case DialogTypeEnum.CLOSED_DIALOG:
+                    break;
+                case DialogTypeEnum.SAVED_DIALOG:
+                    console.log('SAVED_DIALOG');
+                    callback()
+                    break;
+                case DialogTypeEnum.SAVED_AND_SEND_DIALOG:
+                    break;
+                case DialogTypeEnum.YES_RESULT:
+                    console.log('YES_RESULT');
+                    callback()
+                    break;
+                case DialogTypeEnum.NO_RESULT:
+                    break;
+                default:
+                    break;
             }
         });
     }
@@ -57,7 +69,7 @@ export class SavedGroupVisaComponent implements OnInit {
         const count = this.ICostVisaItem.length;
         const approveCount = this.ICostVisaItem.filter(i => i.IsAproveBrendManager);
         if (count != approveCount.length) {
-            this.openDialog(DialogTypeEnum.SAVES_DIALOG, callback)
+            this.openDialog(DialogTypeEnum.SAVED_DIALOG, callback)
         } else {
             callback();
         }

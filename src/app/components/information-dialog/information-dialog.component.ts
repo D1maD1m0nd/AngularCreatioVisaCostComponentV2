@@ -22,13 +22,28 @@ export class InformationDialogComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    onSaveClick(): void {
+        console.log('onSaveClick');
+        this.dialogRef.close(DialogTypeEnum.SAVED_DIALOG);
+    }
+
+    onSaveAndSendClick(): void {
+        console.log('onSaveAndSendClick');
+        this.dialogRef.close(DialogTypeEnum.SAVED_AND_SEND_DIALOG);
+    }
+
+    onCloseClick(): void {
+        console.log('onCloseClick');
+        this.dialogRef.close(DialogTypeEnum.CLOSED_DIALOG);
+    }
+
     onYesClick(): void {
         console.log('Yes clicked');
-        this.dialogRef.close(true);
+        this.dialogRef.close(DialogTypeEnum.YES_RESULT);
     }
 
     onNoClick(): void {
         console.log('No clicked');
-        this.dialogRef.close(false);
+        this.dialogRef.close(DialogTypeEnum.NO_RESULT);
     }
 }
