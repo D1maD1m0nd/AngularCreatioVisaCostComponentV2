@@ -17,6 +17,7 @@ export const editableColumn: string[] = [
 ]
 
 export const aggGetterColumns: string[] = [
+    "TotalYearNewSum",
     "DeltaChanged"
 ]
 export const colorStatus = {

@@ -94,17 +94,26 @@ export class AngularVisaCostComponent implements OnInit {
 
     onCellValueChanged(event: CellValueChangedEvent) {
         if (event.node.group) {
+            const quarterCounter = 4;
             const sum = event.data.TotalYearNewSum;
+            console.log(event)
             event.node.allLeafChildren.forEach(i => {
+                console.log(i)
                 let result = 0;
                 let value = i.data.TotalYearNewSum;
                 if (value) {
                     const shareSum = this.lastEditingSum / i.data.TotalYearNewSum;
                     result = sum / shareSum;
                 } else {
+                    const shareFilial = this.repository.GetShareFilialSumByName(i.data.FilialName)
                     //TODO спросить если одна из строк является 0 как ее считать
-                    result = sum / event.node.allLeafChildren.length;
+                    result = sum * shareFilial / 100;
                 }
+                const quarterResult = result / quarterCounter;
+                i.setDataValue("FirstQuarterNewSum", quarterResult);
+                i.setDataValue("SecondQuarterNewSum", quarterResult);
+                i.setDataValue("ThirdQuarterNewSum", quarterResult);
+                i.setDataValue("FourthQuarterNewSum", quarterResult);
                 i.setDataValue("TotalYearNewSum", result);
             });
         }

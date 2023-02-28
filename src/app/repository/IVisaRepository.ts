@@ -15,4 +15,6 @@ export interface IVisaRepository {
     UpdateCostVisa(): Observable<any>
 
     SaveDataToLocalStore(costVisaItems: ICostItem[]): void
+
+    GetShareFilialSumByName(filialName: string): number
 }

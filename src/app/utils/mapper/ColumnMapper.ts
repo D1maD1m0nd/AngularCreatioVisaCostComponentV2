@@ -62,8 +62,13 @@ function getValueGetter(key: string, params: ValueGetterParams<any>) {
                 params.data.ThirdQuarterPlanSumBranch +
                 params.data.FourthQuarterPlanSumBranch;
             return newSum - newSumFilial;
+        case "TotalYearNewSum":
+            return params.data.FirstQuarterNewSum +
+                params.data.SecondQuarterNewSum +
+                params.data.ThirdQuarterNewSum +
+                params.data.FourthQuarterNewSum
         default:
-            console.log(params);
+
             return params.data[key];
     }
 }

@@ -19,6 +19,11 @@ export class VisaRepository implements IVisaRepository {
         });
     }
 
+    GetShareFilialSumByName(filialName: string): number {
+        const findResult = this.visaSummaryData.ShareFilialItems.find(item => item.FilialName == filialName);
+        return findResult ? findResult.ShareFilialSum : 0.0;
+    }
+
     AddUpdateItem(item: ICostItem): void {
         return this.apiService.AddUpdateItem(item);
     }

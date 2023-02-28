@@ -33,7 +33,6 @@ export class ApiClientService {
 
     AddUpdateItem(item: ICostItem) {
         this.UpdateItems.add(item);
-        console.log(this.UpdateItems);
     }
 
     UpdateRecordsDetailBudgetSum(): Observable<any> {
