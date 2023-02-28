@@ -4,6 +4,9 @@ import {
     CellEditingStoppedEvent,
     CellValueChangedEvent,
     ColDef,
+    ColumnMovedEvent,
+    ColumnResizedEvent,
+    ColumnVisibleEvent,
     DomLayoutType,
     GridReadyEvent,
     RowEditingStartedEvent,
@@ -63,12 +66,30 @@ export class AngularVisaCostComponent implements OnInit {
         });
     }
 
+    onColumnMoved(params: ColumnMovedEvent) {
+        console.log("ColumnMovedEvent")
+        const state = params.columnApi.getColumnState()
+        this.repository.SaveColumnDefToLocalStore(state);
+    }
+
+    onColumnVisible(params: ColumnVisibleEvent) {
+        console.log("ColumnVisibleEvent")
+        const state = params.columnApi.getColumnState()
+        this.repository.SaveColumnDefToLocalStore(state);
+    }
+
+    onColumnResized(params: ColumnResizedEvent) {
+        console.log("ColumnResizedEvent")
+        const state = params.columnApi.getColumnState()
+        this.repository.SaveColumnDefToLocalStore(state);
+    }
+
     onGridReady(params: GridReadyEvent<ICostItem>) {
-        console.log("grid ready")
+        const localGridData = this.repository.GetColumnDefToLocalStore()
         this.repository.visaSummaryDataSubject.subscribe((item: IVisaCostSummary) => {
             this.metaData = item.MetaData;
             this.summaryData = item.SummaryData;
-            this.columnDefs = ToColumnDefArr(item.CostItemColumn, item.CostItemsResult[0]);
+            this.columnDefs = ToColumnDefArr(item.CostItemColumn, item.CostItemsResult[0], localGridData);
             this.rowDataCostItem = item.CostItemsResult;
         })
         this.repository.GetVisaSummary(this.year, this.brand, this.filial, this.tableVisaId)
@@ -78,7 +99,6 @@ export class AngularVisaCostComponent implements OnInit {
     }
 
     onRowEditingStopped(event: RowEditingStoppedEvent) {
-
     }
 
     onCellEditingStarted(event: CellEditingStartedEvent) {
@@ -89,39 +109,11 @@ export class AngularVisaCostComponent implements OnInit {
     }
 
     onCellEditingStopped(event: CellEditingStoppedEvent) {
-
     }
 
     onCellValueChanged(event: CellValueChangedEvent) {
-        if (event.node.group) {
-            const quarterCounter = 4;
-            const sum = event.data.TotalYearNewSum;
-            console.log(event)
-            event.node.allLeafChildren.forEach(i => {
-                console.log(i)
-                let result = 0;
-                let value = i.data.TotalYearNewSum;
-                if (value) {
-                    const shareSum = this.lastEditingSum / i.data.TotalYearNewSum;
-                    result = sum / shareSum;
-                } else {
-                    const shareFilial = this.repository.GetShareFilialSumByName(i.data.FilialName)
-                    //TODO спросить если одна из строк является 0 как ее считать
-                    result = sum * shareFilial / 100;
-                }
-                const quarterResult = result / quarterCounter;
-                i.setDataValue("FirstQuarterNewSum", quarterResult);
-                i.setDataValue("SecondQuarterNewSum", quarterResult);
-                i.setDataValue("ThirdQuarterNewSum", quarterResult);
-                i.setDataValue("FourthQuarterNewSum", quarterResult);
-                i.setDataValue("TotalYearNewSum", result);
-            });
-        }
-        this.repository.AddUpdateItem(event.data);
     }
 
     ngOnInit(): void {
-
     }
-
 }

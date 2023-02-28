@@ -1,5 +1,5 @@
 import {ICostColumn} from "../../data/model/response/CostColumn";
-import {CellClassParams, ColDef, ValueFormatterParams, ValueGetterParams} from "ag-grid-community";
+import {CellClassParams, ColDef, ColumnState, ValueFormatterParams, ValueGetterParams} from "ag-grid-community";
 import {
     aggGetterColumns,
     colorStatus,
@@ -9,7 +9,8 @@ import {
 import {formatNumber} from "../Helper/StringHelper";
 
 
-export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any): ColDef[] {
+export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any, localStoreState: ColumnState[] | null): ColDef[] {
+
     return CostItemColumn.map((i: ICostColumn) => {
             const isString = typeof instance[i.ItemCostKey] === 'string';
             const isNumber = typeof instance[i.ItemCostKey] === 'number';

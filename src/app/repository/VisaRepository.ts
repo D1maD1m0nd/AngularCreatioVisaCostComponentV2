@@ -5,6 +5,7 @@ import {ICostItem} from "../data/model/response/ItemCost";
 import {Observable, Subject} from "rxjs";
 import {IVisaCostSummary} from "../data/model/response/VisaCostSummary";
 import {Injectable} from "@angular/core";
+import {ColumnState} from "ag-grid-community";
 
 @Injectable({
     providedIn: 'root'
@@ -51,9 +52,17 @@ export class VisaRepository implements IVisaRepository {
         return this.apiService.UpdateCostVisa();
     }
 
-    SaveDataToLocalStore(costVisaItems: ICostItem[]): void {
+    SaveCostItemsToLocalStore(costVisaItems: ICostItem[]): void {
         this.visaSummaryData.CostItemsResult = costVisaItems
         this.visaSummaryData.SaveLocal = true
         this.storageService.setItem(this.visaSummaryData.TableVisaId, this.visaSummaryData)
+    }
+
+    SaveColumnDefToLocalStore(columnState: ColumnState[]): void {
+        this.storageService.setItem("ColumnState", columnState)
+    }
+
+    GetColumnDefToLocalStore(): ColumnState[] | null {
+        return this.storageService.getItem("ColumnState")
     }
 }

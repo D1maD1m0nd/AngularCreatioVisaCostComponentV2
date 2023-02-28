@@ -29,7 +29,7 @@ export class SavedGroupVisaComponent implements OnInit {
         this.repository = repository;
     }
 
-    openDialog(type: DialogTypeEnum, callback: () => void): void {
+    openDialog(type: DialogTypeEnum): void {
         const dialogRef = this.dialog.open(InformationDialogComponent, {
             width: '750px',
             data: {
@@ -42,13 +42,16 @@ export class SavedGroupVisaComponent implements OnInit {
                     break;
                 case DialogTypeEnum.SAVED_DIALOG:
                     console.log('SAVED_DIALOG');
-                    callback()
+                    this.repository.SaveCostItemsToLocalStore(this.ICostVisaItem);
                     break;
                 case DialogTypeEnum.SAVED_AND_SEND_DIALOG:
-                    break;
                 case DialogTypeEnum.YES_RESULT:
                     console.log('YES_RESULT');
-                    callback()
+                    this.repository.UpdateRecordsDetailBudgetSum().subscribe(i => {
+                        console.log(i);
+                        this.bridgeService.IsApproveButton$.next(true);
+                        this.openSnackBar("Сохранение прошло успешно");
+                    });
                     break;
                 case DialogTypeEnum.NO_RESULT:
                     break;
@@ -59,19 +62,16 @@ export class SavedGroupVisaComponent implements OnInit {
     }
 
     approveSavedData() {
-        const callback = () => {
+        const count = this.ICostVisaItem.length;
+        const approveCount = this.ICostVisaItem.filter(i => i.IsAproveBrendManager);
+        if (count != approveCount.length) {
+            this.openDialog(DialogTypeEnum.SAVED_DIALOG)
+        } else {
             this.repository.UpdateRecordsDetailBudgetSum().subscribe(i => {
                 console.log(i);
                 this.bridgeService.IsApproveButton$.next(true);
                 this.openSnackBar("Сохранение прошло успешно");
             });
-        }
-        const count = this.ICostVisaItem.length;
-        const approveCount = this.ICostVisaItem.filter(i => i.IsAproveBrendManager);
-        if (count != approveCount.length) {
-            this.openDialog(DialogTypeEnum.SAVED_DIALOG, callback)
-        } else {
-            callback();
         }
 
     }
@@ -84,12 +84,8 @@ export class SavedGroupVisaComponent implements OnInit {
     }
 
     closeWindow() {
-        const callback = () => {
-            this.repository.SaveDataToLocalStore(this.ICostVisaItem);
-        }
-        this.openDialog(DialogTypeEnum.CLOSED_DIALOG, callback);
+        this.openDialog(DialogTypeEnum.CLOSED_DIALOG);
     }
-
     openSnackBar(message: string) {
         this._snackBar.open(message, 'OK', {
             duration: 5000, // Закрыть через 5 секунд
