@@ -7,17 +7,26 @@ import {
     invisibleColumn
 } from "../constants/ConfigurationColumnsConstants";
 import {formatNumber} from "../Helper/StringHelper";
+import {CostItemColumnToColumnSettings} from "./ColumnSettingMapper";
+import {ColumnSetting} from "../../data/model/util/ColumnSetting";
+import {sortedColSettingsByColState} from "../sorted/SortedColumn";
 
 
-export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any, localStoreState: ColumnState[] | null): ColDef[] {
-
-    return CostItemColumn.map((i: ICostColumn) => {
-            const isString = typeof instance[i.ItemCostKey] === 'string';
-            const isNumber = typeof instance[i.ItemCostKey] === 'number';
-            const isBoolean = typeof instance[i.ItemCostKey] == 'boolean';
-            const isInvisible = invisibleColumn.includes(i.ItemCostKey);
-            const isEditable = editableColumn.includes(i.ItemCostKey);
-            const isAggGetter = aggGetterColumns.includes(i.ItemCostKey);
+export function ToColumnDefArr(CostItemColumn: ICostColumn[], instance: any, localStoreState: ColumnState[] | null | undefined): ColDef[] {
+    let columnSettings = CostItemColumn?.map(item => {
+        const findItem = localStoreState?.find(i => i.colId == item.ItemCostKey)
+        return CostItemColumnToColumnSettings(item, findItem)
+    });
+    if (localStoreState) {
+        columnSettings = sortedColSettingsByColState(columnSettings, localStoreState)
+    }
+    return columnSettings.map((i: ColumnSetting) => {
+            const isString = typeof instance[i.key] === 'string';
+            const isNumber = typeof instance[i.key] === 'number';
+            const isBoolean = typeof instance[i.key] == 'boolean';
+            const isInvisible = invisibleColumn.includes(i.key);
+            const isEditable = editableColumn.includes(i.key);
+            const isAggGetter = aggGetterColumns.includes(i.key);
             return getColDef(isString, isNumber, isBoolean, isInvisible, isEditable, isAggGetter, i);
         }
     );
@@ -29,25 +38,27 @@ function getColDef(isString: boolean,
                    isInvisible: boolean,
                    isEditable: boolean,
                    isAggGetter: boolean,
-                   item: ICostColumn): ColDef {
+                   item: ColumnSetting): ColDef {
 
     const colDef = <ColDef>{
         cellStyle: params => getCellStyle(params),
         cellClass: params => getCellClass(params, isNumber),
-        valueFormatter: params => getValueFormatter(params, item, isNumber),
-        field: item.ItemCostKey,
-        headerName: item.Name,
+        valueFormatter: params => getValueFormatter(params),
+        field: item.key,
+        headerName: item.name,
         editable: isEditable,
         enableRowGroup: isString,
         filter: isString ? 'agSetColumnFilter' : null,
         aggFunc: isNumber ? 'sum' : null,
-        hide: isInvisible,
+        hide: item.hide || isInvisible,
         valueParser: isNumber ? params => Number(params.newValue) : null,
         cellRenderer: getCellRender(isNumber, isBoolean),
     };
-    if (isAggGetter) {
-        colDef.valueGetter = params => getValueGetter(item.ItemCostKey, params);
-    }
+    item?.width ? colDef.width = item.width : null;
+    item?.sort ? colDef.sort = item.sort : null;
+    item?.sortIndex ? colDef.sortIndex = item.sortIndex : null;
+    isAggGetter ? colDef.valueGetter = params => getValueGetter(item.key, params) : null;
+
     return colDef;
 }
 
@@ -113,7 +124,9 @@ function getCellClass(params: CellClassParams<any, any>, isNumber: boolean) {
     return null;
 }
 
-function getValueFormatter(params: ValueFormatterParams<any, any>, item: ICostColumn, isNumber: boolean) {
+function getValueFormatter(params: ValueFormatterParams) {
     const value = params.value;
     return formatNumber(value);
 }
+
+
