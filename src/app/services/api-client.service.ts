@@ -16,7 +16,6 @@ import {ICostItem} from "../data/model/response/ItemCost";
 export class ApiClientService {
     BASE_URL = environment.apiUrl
     BPM_CSRF_TOKEN: string
-    private UpdateItems: Set<ICostItem> = new Set();
 
     constructor(
         private http: HttpClient,
@@ -31,21 +30,16 @@ export class ApiClientService {
         }
     }
 
-    AddUpdateItem(item: ICostItem) {
-        this.UpdateItems.add(item);
-    }
-
-    UpdateRecordsDetailBudgetSum(): Observable<any> {
+    UpdateRecordsDetailBudgetSum(UpdateItems: ICostItem[]): Observable<any> {
         let url;
         if (environment.buildType == BuildTypes.CREATIO) {
             url = `${this.BASE_URL}/rest/VisaCostItemWebService/UpdateRecordsDetailBudgetSum`;
         } else {
             url = `${this.BASE_URL}/ServiceModel/VisaCostItemWebService.svc/UpdateRecordsDetailBudgetSum`;
         }
-        const data = ToSaveCostData([...this.UpdateItems]);
+        const data = ToSaveCostData(UpdateItems);
         console.log(data)
         const headers = this.GetHeaders()
-        this.UpdateItems.clear();
         return this.http.post(
             url,
             data,
@@ -55,16 +49,15 @@ export class ApiClientService {
         );
     }
 
-    UpdateCostVisa(): Observable<any> {
+    UpdateCostVisa(UpdateItems: ICostItem[]): Observable<any> {
         let url;
         if (environment.buildType == BuildTypes.CREATIO) {
             url = `${this.BASE_URL}/rest/VisaCostItemWebService/UpdateCostVisa`;
         } else {
             url = `${this.BASE_URL}/ServiceModel/VisaCostItemWebService.svc/UpdateCostVisa`;
         }
-        const data = ToSaveCostData([...this.UpdateItems]);
+        const data = ToSaveCostData(UpdateItems);
         const headers = this.GetHeaders();
-        this.UpdateItems.clear();
         return this.http.post(
             url,
             data,

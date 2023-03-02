@@ -23,4 +23,6 @@ export interface IVisaRepository {
     GetShareFilialSumByName(filialName: string): number
 
     GetColumnDefToLocalStore(): ColumnState[] | null
+
+    ClearStorage(): void
 }

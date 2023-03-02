@@ -26,7 +26,11 @@ export class VisaRepository implements IVisaRepository {
     }
 
     AddUpdateItem(item: ICostItem): void {
-        return this.apiService.AddUpdateItem(item);
+        const key = `saved_visa_cost_data_${this.visaSummaryData.TableVisaId}`
+        const savedData = this.storageService.getItem(key)
+        const updateItems = savedData ? new Set(savedData) : new Set();
+        updateItems.add(item);
+        this.storageService.setItem(key, updateItems)
     }
 
     GetVisaSummary(YearId: string | null, BrandId: string | null, Filial: string | null, TableVisaId: string | null): void {
@@ -44,12 +48,16 @@ export class VisaRepository implements IVisaRepository {
 
     UpdateRecordsDetailBudgetSum(): Observable<any> {
         this.visaSummaryData.SaveLocal = false
-        return this.apiService.UpdateRecordsDetailBudgetSum();
+        const key = `saved_visa_cost_data_${this.visaSummaryData.TableVisaId}`
+        const savedData = this.storageService.getItem(key)
+        return this.apiService.UpdateRecordsDetailBudgetSum(savedData);
     }
 
     UpdateCostVisa(): Observable<any> {
         this.visaSummaryData.SaveLocal = false
-        return this.apiService.UpdateCostVisa();
+        const key = `saved_visa_cost_data_${this.visaSummaryData.TableVisaId}`
+        const savedData = this.storageService.getItem(key)
+        return this.apiService.UpdateCostVisa(savedData);
     }
 
     SaveCostItemsToLocalStore(costVisaItems: ICostItem[]): void {
@@ -64,5 +72,12 @@ export class VisaRepository implements IVisaRepository {
 
     GetColumnDefToLocalStore(): ColumnState[] | null {
         return this.storageService.getItem("ColumnState")
+    }
+
+    ClearStorage(): void {
+        const keySavedVisaCost = `saved_visa_cost_data_${this.visaSummaryData.TableVisaId}`;
+        const keyLocalStore = this.visaSummaryData.TableVisaId;
+        this.storageService.removeItem(keySavedVisaCost)
+        this.storageService.removeItem(keyLocalStore)
     }
 }

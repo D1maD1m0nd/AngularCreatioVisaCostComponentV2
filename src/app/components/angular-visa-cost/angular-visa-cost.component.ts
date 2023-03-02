@@ -11,6 +11,7 @@ import {
     GridReadyEvent,
     RowEditingStartedEvent,
     RowEditingStoppedEvent,
+    SortChangedEvent,
 } from "ag-grid-community";
 import "ag-grid-enterprise"
 import {ICostItem} from "../../data/model/response/ItemCost";
@@ -87,6 +88,12 @@ export class AngularVisaCostComponent implements OnInit {
         this.repository.SaveColumnDefToLocalStore(state);
     }
 
+    onSortChanged(params: SortChangedEvent) {
+        console.log("ColumnResizedEvent")
+        const state = params.columnApi.getColumnState()
+        this.repository.SaveColumnDefToLocalStore(state);
+    }
+
     generatePinnedBottomData() {
         let result: any = {};
         this.gridColumnApi.getAllGridColumns().forEach(item => {
@@ -147,6 +154,7 @@ export class AngularVisaCostComponent implements OnInit {
     }
 
     onCellValueChanged(event: CellValueChangedEvent) {
+        this.repository.AddUpdateItem(event.data);
     }
 
     ngOnInit(): void {

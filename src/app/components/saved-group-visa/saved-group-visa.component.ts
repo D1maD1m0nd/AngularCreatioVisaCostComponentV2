@@ -48,9 +48,9 @@ export class SavedGroupVisaComponent implements OnInit {
                 case DialogTypeEnum.YES_RESULT:
                     console.log('YES_RESULT');
                     this.repository.UpdateRecordsDetailBudgetSum().subscribe(i => {
-                        console.log(i);
                         this.bridgeService.IsApproveButton$.next(true);
                         this.openSnackBar("Сохранение прошло успешно");
+                        this.repository.ClearStorage()
                     });
                     break;
                 case DialogTypeEnum.NO_RESULT:
@@ -71,6 +71,7 @@ export class SavedGroupVisaComponent implements OnInit {
                 console.log(i);
                 this.bridgeService.IsApproveButton$.next(true);
                 this.openSnackBar("Сохранение прошло успешно");
+                this.repository.ClearStorage()
             });
         }
 
@@ -79,6 +80,7 @@ export class SavedGroupVisaComponent implements OnInit {
     sendSavedData() {
         this.repository.UpdateCostVisa().subscribe(i => {
             this.openSnackBar("Сохранение прошло успешно");
+            this.repository.ClearStorage()
         });
         console.log(this.ICostVisaItem);
     }
