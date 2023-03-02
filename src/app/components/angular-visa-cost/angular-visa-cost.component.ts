@@ -7,7 +7,7 @@ import {
     ColumnMovedEvent,
     ColumnResizedEvent,
     ColumnVisibleEvent,
-    DomLayoutType,
+    GridApi,
     GridReadyEvent,
     RowEditingStartedEvent,
     RowEditingStoppedEvent,
@@ -22,6 +22,8 @@ import {ISummaryData} from "../../data/model/response/SummaryData";
 import {BridgeServiceService} from "../../services/bridge-service.service";
 import {VisaRepository} from "../../repository/VisaRepository";
 import {IVisaRepository} from "../../repository/IVisaRepository";
+import {ColumnApi} from "ag-grid-community/dist/lib/columns/columnApi";
+import {formatNumber} from "../../utils/Helper/StringHelper";
 
 @Component({
     selector: 'app-angular-visa-cost',
@@ -33,9 +35,10 @@ export class AngularVisaCostComponent implements OnInit {
     @Input("brand") brand: string
     @Input("filial") filial: string
     @Input("table-visa-id") tableVisaId: string
-    public domLayout: DomLayoutType = 'autoHeight';
     public columnDefs: ColDef[];
     public frameworkComponents: any
+    private gridApi: GridApi;
+    private gridColumnApi: ColumnApi;
     public defaultColDef: ColDef = {
         flex: 1,
         minWidth: 150,
@@ -84,13 +87,45 @@ export class AngularVisaCostComponent implements OnInit {
         this.repository.SaveColumnDefToLocalStore(state);
     }
 
+    generatePinnedBottomData() {
+        let result: any = {};
+        this.gridColumnApi.getAllGridColumns().forEach(item => {
+            result[item.getColId()] = null;
+        });
+        return this.calculatePinnedBottomData(result);
+    }
+
+    calculatePinnedBottomData(target: any) {
+        let columnsWithAggregation = this.columnDefs
+            .filter(i => i.aggFunc)
+            .map(i => i.field as string)
+        console.log(this.columnDefs)
+        console.log(columnsWithAggregation);
+        columnsWithAggregation.forEach(element => {
+            console.log('element', element);
+            this.gridApi.forEachNodeAfterFilter((rowNode) => {
+                if (rowNode.data[element])
+                    target[element] += Number(rowNode.data[element]);
+            });
+            if (target[element])
+                target[element] = `<b>${formatNumber(target[element])}</b>`;
+        })
+        return target;
+    }
+
     onGridReady(params: GridReadyEvent<ICostItem>) {
+        this.gridApi = params.api;
+        this.gridColumnApi = params.columnApi;
         const localGridData = this.repository.GetColumnDefToLocalStore()
         this.repository.visaSummaryDataSubject.subscribe((item: IVisaCostSummary) => {
             this.metaData = item.MetaData;
             this.summaryData = item.SummaryData;
             this.columnDefs = ToColumnDefArr(item.CostItemColumn, item.CostItemsResult[0], localGridData);
             this.rowDataCostItem = item.CostItemsResult;
+            setTimeout(() => {
+                let pinnedBottomData = this.generatePinnedBottomData();
+                this.gridApi.setPinnedBottomRowData([pinnedBottomData]);
+            }, 500)
         })
         this.repository.GetVisaSummary(this.year, this.brand, this.filial, this.tableVisaId)
     }

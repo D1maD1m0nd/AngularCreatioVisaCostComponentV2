@@ -2,6 +2,21 @@
 @import 'ag-grid-community/styles/ag-theme-alpine.css';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+body .mat-button-base:not(.mat-icon-button, .crt-round-button, .crt) .mat-button-wrapper {
+    color: #ffffff;
+}
+
+body .mat-dialog-container [mat-dialog-content] {
+    font-size: 14px;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+body .mat-dialog-container [mat-dialog-title] {
+    font-size: 24px;
+    color: #ffffff;
+    text-align: left;
+}
 
 .mat-checkbox-frame {
     transition: border-color 90ms cubic-bezier(0, 0, 0.2, 0.1);
