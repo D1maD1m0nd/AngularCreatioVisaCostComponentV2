@@ -66,8 +66,6 @@ export class AngularVisaCostComponent implements OnInit {
             checkboxRenderer: CheckboxRenderComponent
         };
         this.repository = repository;
-        bridgeService.IsApproveButton$.subscribe(i => {
-        });
     }
 
     onColumnMoved(params: ColumnMovedEvent) {
@@ -106,16 +104,15 @@ export class AngularVisaCostComponent implements OnInit {
         let columnsWithAggregation = this.columnDefs
             .filter(i => i.aggFunc)
             .map(i => i.field as string)
-        console.log(this.columnDefs)
-        console.log(columnsWithAggregation);
         columnsWithAggregation.forEach(element => {
-            console.log('element', element);
-            this.gridApi.forEachNodeAfterFilter((rowNode) => {
-                if (rowNode.data[element])
+            this.gridApi.forEachLeafNode((rowNode) => {
+                if (rowNode.data[element]) {
                     target[element] += Number(rowNode.data[element]);
+                }
             });
-            if (target[element])
+            if (target[element]) {
                 target[element] = `<b>${formatNumber(target[element])}</b>`;
+            }
         })
         return target;
     }
@@ -154,6 +151,7 @@ export class AngularVisaCostComponent implements OnInit {
     }
 
     onCellValueChanged(event: CellValueChangedEvent) {
+        console.log("onCellValueChanged")
         this.repository.AddUpdateItem(event.data);
     }
 

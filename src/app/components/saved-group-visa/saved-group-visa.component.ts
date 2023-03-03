@@ -21,10 +21,11 @@ export class SavedGroupVisaComponent implements OnInit {
     private horizontalPosition: MatSnackBarHorizontalPosition = 'center';
     private verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-    constructor(repository: VisaRepository,
-                private bridgeService: BridgeServiceService,
-                private _snackBar: MatSnackBar,
-                public dialog: MatDialog,
+    constructor(
+        repository: VisaRepository,
+        public bridgeService: BridgeServiceService,
+        private _snackBar: MatSnackBar,
+        public dialog: MatDialog,
     ) {
         this.repository = repository;
     }
@@ -48,7 +49,6 @@ export class SavedGroupVisaComponent implements OnInit {
                 case DialogTypeEnum.YES_RESULT:
                     console.log('YES_RESULT');
                     this.repository.UpdateRecordsDetailBudgetSum().subscribe(i => {
-                        this.bridgeService.IsApproveButton$.next(true);
                         this.openSnackBar("Сохранение прошло успешно");
                         this.repository.ClearStorage()
                     });
@@ -69,7 +69,6 @@ export class SavedGroupVisaComponent implements OnInit {
         } else {
             this.repository.UpdateRecordsDetailBudgetSum().subscribe(i => {
                 console.log(i);
-                this.bridgeService.IsApproveButton$.next(true);
                 this.openSnackBar("Сохранение прошло успешно");
                 this.repository.ClearStorage()
             });
@@ -88,6 +87,7 @@ export class SavedGroupVisaComponent implements OnInit {
     closeWindow() {
         this.openDialog(DialogTypeEnum.CLOSED_DIALOG);
     }
+
     openSnackBar(message: string) {
         this._snackBar.open(message, 'OK', {
             duration: 5000, // Закрыть через 5 секунд

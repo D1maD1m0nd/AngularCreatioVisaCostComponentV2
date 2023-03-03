@@ -95,7 +95,7 @@ function getCellRender(isNumber: boolean, isBoolean: boolean) {
 }
 
 function getCellStyle(params: CellClassParams<any, any>,) {
-    if (params.node.group && !params.node.footer) {
+    if (params.node.group && !params.node.footer || params.node.rowPinned && params.node.rowPinned == "bottom") {
         return colorStatus.Group;
     }
     if (params.data) {
@@ -108,9 +108,10 @@ function getCellStyle(params: CellClassParams<any, any>,) {
     return null
 }
 
-function getCellClass(params: CellClassParams<any, any>, isNumber: boolean) {
-    const isFooter = params.node.footer;
-    if (isFooter) {
+function getCellClass(params: CellClassParams, isNumber: boolean) {
+    console.log(params.node.rowPinned)
+    const isFooterOrPinned = params.node.footer || params.node.rowPinned;
+    if (isFooterOrPinned) {
         if (isNumber) {
             return 'number-cell-footer-bold number-cell';
         } else {

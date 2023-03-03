@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ICellRendererAngularComp} from "ag-grid-angular";
 import {ICellRendererParams} from "ag-grid-community";
+import {BridgeServiceService} from "../../services/bridge-service.service";
 
 @Component({
     selector: 'app-checkbox-render-component',
@@ -12,7 +13,7 @@ export class CheckboxRenderComponent implements OnInit, ICellRendererAngularComp
     public params: any;
     public isEdit: boolean = false
 
-    constructor() {
+    constructor(private bridgeServiceService: BridgeServiceService) {
     }
 
     public set isEditSet(value: boolean) {
@@ -30,7 +31,7 @@ export class CheckboxRenderComponent implements OnInit, ICellRendererAngularComp
         this.isEditSet = params.value
     }
 
-    refresh(params: ICellRendererParams<any>): boolean {
+    refresh(params: ICellRendererParams): boolean {
         return false;
     }
 

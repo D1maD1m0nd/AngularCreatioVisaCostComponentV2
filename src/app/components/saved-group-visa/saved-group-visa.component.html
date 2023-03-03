@@ -1,22 +1,31 @@
 <div class="saved-group">
-    <button (click)="closeWindow()"
-            class="close-button"
-            color="warn"
-            mat-raised-button>
+    <button
+        id="close-button"
+        (click)="closeWindow()"
+        class="close-button"
+        color="warn"
+        mat-raised-button
+        [disabled]="bridgeService.IsCloseButtonDisabled$ | async">
         Закрыть
     </button>
 
-    <button (click)="sendSavedData()"
-            class="save-button"
-            color="primary"
-            mat-raised-button
+    <button
+        id="save-change-data-filial-button"
+        (click)="sendSavedData()"
+        class="save-button"
+        color="primary"
+        mat-raised-button
+        [disabled]="bridgeService.IsSaveButtonDisabled$ | async"
     >Отправить изменения филиалам
     </button>
 
-    <button (click)="approveSavedData()"
-            class="save-button"
-            color="accent"
-            mat-raised-button>
+    <button
+        id="approve-change-button"
+        (click)="approveSavedData()"
+        class="save-button"
+        color="accent"
+        mat-raised-button
+        [disabled]="bridgeService.IsApproveButtonDisabled$ | async">
         Принять изменения
     </button>
 </div>

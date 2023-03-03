@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
-import {Subject} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
 export class BridgeServiceService {
-    IsApproveButton$ = new Subject<boolean>()
+    IsApproveButtonDisabled$ = new BehaviorSubject<boolean>(false)
+    IsSaveButtonDisabled$ = new BehaviorSubject<boolean>(false)
+    IsCloseButtonDisabled$ = new BehaviorSubject<boolean>(false)
 
     constructor() {
     }

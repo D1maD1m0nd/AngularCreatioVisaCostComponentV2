@@ -9,7 +9,8 @@ export class LocalStorageService {
     }
 
     setItem(key: string, value: any): void {
-        this.localStorage.setItem(key, JSON.stringify(value));
+        const data = JSON.stringify(value)
+        this.localStorage.setItem(key, data);
     }
 
     getItem(key: string | null): any | null {

@@ -26,16 +26,17 @@ export class VisaRepository implements IVisaRepository {
     }
 
     AddUpdateItem(item: ICostItem): void {
-        const key = `saved_visa_cost_data_${this.visaSummaryData.TableVisaId}`
-        const savedData = this.storageService.getItem(key)
-        const updateItems = savedData ? new Set(savedData) : new Set();
+        const key = `saved_visa_cost_data_${this.visaSummaryData.TableVisaId}`;
+        const savedData = this.storageService.getItem(key);
+        const isArray = savedData instanceof Array
+        const updateItems = savedData && isArray ? new Set(savedData) : new Set();
         updateItems.add(item);
-        this.storageService.setItem(key, updateItems)
+        this.storageService.setItem(key, [...updateItems])
     }
 
     GetVisaSummary(YearId: string | null, BrandId: string | null, Filial: string | null, TableVisaId: string | null): void {
         const localData = this.storageService.getItem(TableVisaId);
-        if (localData) {
+        if (localData && localData.SaveLocal) {
             console.log("LOCAL STORE");
             this.visaSummaryDataSubject.next(localData)
         } else {
