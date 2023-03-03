@@ -25,3 +25,6 @@ export const colorStatus = {
     Positive: {background: 'aquamarine'},
     Negative: {background: 'rgba(255, 51, 144, 0.32)'}
 }
+
+export const keyBrendManager = "IsAproveBrendManager"
+export const keyDirFilial = "IsAproveOwnerFilial"

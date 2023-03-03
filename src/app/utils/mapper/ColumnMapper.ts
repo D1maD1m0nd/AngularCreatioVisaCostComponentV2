@@ -109,7 +109,6 @@ function getCellStyle(params: CellClassParams<any, any>,) {
 }
 
 function getCellClass(params: CellClassParams, isNumber: boolean) {
-    console.log(params.node.rowPinned)
     const isFooterOrPinned = params.node.footer || params.node.rowPinned;
     if (isFooterOrPinned) {
         if (isNumber) {

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {
     CellEditingStartedEvent,
     CellEditingStoppedEvent,
@@ -9,6 +9,7 @@ import {
     ColumnVisibleEvent,
     GridApi,
     GridReadyEvent,
+    IRowNode,
     RowEditingStartedEvent,
     RowEditingStoppedEvent,
     SortChangedEvent,
@@ -25,13 +26,15 @@ import {VisaRepository} from "../../repository/VisaRepository";
 import {IVisaRepository} from "../../repository/IVisaRepository";
 import {ColumnApi} from "ag-grid-community/dist/lib/columns/columnApi";
 import {formatNumber} from "../../utils/Helper/StringHelper";
+import {editableColumn, keyBrendManager, keyDirFilial} from "../../utils/constants/ConfigurationColumnsConstants";
+
 
 @Component({
     selector: 'app-angular-visa-cost',
     templateUrl: './angular-visa-cost.component.html',
     styleUrls: ['./angular-visa-cost.component.scss']
 })
-export class AngularVisaCostComponent implements OnInit {
+export class AngularVisaCostComponent implements OnInit, OnDestroy {
     @Input('year') year: string
     @Input("brand") brand: string
     @Input("filial") filial: string
@@ -129,7 +132,8 @@ export class AngularVisaCostComponent implements OnInit {
             setTimeout(() => {
                 let pinnedBottomData = this.generatePinnedBottomData();
                 this.gridApi.setPinnedBottomRowData([pinnedBottomData]);
-            }, 500)
+                this.enabledSavedData()
+            }, 500);
         })
         this.repository.GetVisaSummary(this.year, this.brand, this.filial, this.tableVisaId)
     }
@@ -151,10 +155,44 @@ export class AngularVisaCostComponent implements OnInit {
     }
 
     onCellValueChanged(event: CellValueChangedEvent) {
-        console.log("onCellValueChanged")
+        const coldId = event.column.getColId();
+        const node = event.node;
         this.repository.AddUpdateItem(event.data);
+        this.checkEnabledSave(coldId, node);
+    }
+
+    private checkEnabledSave(key: string, node: IRowNode) {
+        if (key == keyBrendManager || key == keyDirFilial) {
+            this.enabledSavedData()
+        } else if (editableColumn.includes(key)) {
+            node.setDataValue(keyBrendManager, false);
+            this.bridgeService.IsSaveButtonDisabled$.next(true);
+        }
+    }
+
+    private enabledSavedData() {
+        let itemApproveBrendManagerCount = 0;
+        let itemDirFilialCount = 0;
+        const letData = this.rowDataCostItem.length;
+        this.gridApi.forEachLeafNode(item => {
+            if (item.data) {
+                if (item.data[keyBrendManager]) {
+                    itemApproveBrendManagerCount++;
+                }
+                if (item.data[keyDirFilial]) {
+                    itemDirFilialCount++;
+                }
+            }
+        })
+        console.log(`${itemApproveBrendManagerCount} != ${letData} = ${itemApproveBrendManagerCount != letData}`)
+        console.log(itemDirFilialCount != letData)
+        this.bridgeService.IsSaveButtonDisabled$.next(itemApproveBrendManagerCount != letData);
+        this.bridgeService.IsApproveButtonDisabled$.next(itemDirFilialCount != letData);
     }
 
     ngOnInit(): void {
+    }
+
+    ngOnDestroy(): void {
     }
 }

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ICostItem} from "../../data/model/response/ItemCost";
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition,} from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
@@ -13,7 +13,7 @@ import {VisaRepository} from "../../repository/VisaRepository";
     templateUrl: './saved-group-visa.component.html',
     styleUrls: ['./saved-group-visa.component.scss']
 })
-export class SavedGroupVisaComponent implements OnInit {
+export class SavedGroupVisaComponent implements OnInit, OnDestroy {
     @Input("ICostVisaItems") ICostVisaItem: ICostItem[]
     @Input("Year") Year: string
     @Input("Brand") Brand: string
@@ -97,6 +97,10 @@ export class SavedGroupVisaComponent implements OnInit {
     }
 
     ngOnInit(): void {
+    }
+
+    ngOnDestroy(): void {
+        this.repository.ClearStorage()
     }
 
 }
