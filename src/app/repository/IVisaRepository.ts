@@ -25,4 +25,6 @@ export interface IVisaRepository {
     GetColumnDefToLocalStore(): ColumnState[] | null
 
     ClearStorage(): void
+
+    ClearUpdateItemStorage(): void
 }

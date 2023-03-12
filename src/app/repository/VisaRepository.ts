@@ -20,6 +20,12 @@ export class VisaRepository implements IVisaRepository {
         });
     }
 
+    ClearUpdateItemStorage(): void {
+        const keyLocalStore = this.visaSummaryData.TableVisaId;
+        const keySavedVisaCost = `saved_visa_cost_data_${keyLocalStore}`;
+        this.storageService.removeItem(keySavedVisaCost)
+    }
+
     GetShareFilialSumByName(filialName: string): number {
         const findResult = this.visaSummaryData.ShareFilialItems.find(item => item.FilialName == filialName);
         return findResult ? findResult.ShareFilialSum : 0.0;
@@ -27,11 +33,16 @@ export class VisaRepository implements IVisaRepository {
 
     AddUpdateItem(item: ICostItem): void {
         const key = `saved_visa_cost_data_${this.visaSummaryData.TableVisaId}`;
-        const savedData = this.storageService.getItem(key);
-        const isArray = savedData instanceof Array
-        const updateItems = savedData && isArray ? new Set(savedData) : new Set();
-        updateItems.add(item);
-        this.storageService.setItem(key, [...updateItems])
+        let savedData = this.storageService.getItem(key);
+        const isArray = savedData && savedData instanceof Array
+        let updateItems: ICostItem[] = isArray ? savedData : [];
+        const replacedIndex = updateItems.findIndex((itemUpdate: ICostItem) => item.VisaId == itemUpdate.VisaId);
+        if (replacedIndex != -1) {
+            updateItems[replacedIndex] = item
+        } else {
+            updateItems.push(item);
+        }
+        this.storageService.setItem(key, updateItems)
     }
 
     GetVisaSummary(YearId: string | null, BrandId: string | null, Filial: string | null, TableVisaId: string | null): void {

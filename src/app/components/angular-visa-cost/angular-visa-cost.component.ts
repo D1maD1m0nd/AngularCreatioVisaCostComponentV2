@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {
     CellEditingStartedEvent,
     CellEditingStoppedEvent,
@@ -35,6 +35,7 @@ import {editableColumn, keyBrendManager, keyDirFilial} from "../../utils/constan
     styleUrls: ['./angular-visa-cost.component.scss']
 })
 export class AngularVisaCostComponent implements OnInit, OnDestroy {
+    @Output("onCloseVisaComponentButtonClick") onCloseVisaComponentButtonClick = new EventEmitter<any>();
     @Input('year') year: string
     @Input("brand") brand: string
     @Input("filial") filial: string
@@ -68,6 +69,10 @@ export class AngularVisaCostComponent implements OnInit, OnDestroy {
         this.frameworkComponents = {
             checkboxRenderer: CheckboxRenderComponent
         };
+        this.bridgeService.OnCloseButtonClick$.subscribe(event => {
+            console.log("OnCloseButtonClick$")
+            this.onCloseVisaComponentButtonClick.next(event)
+        });
         this.repository = repository;
     }
 
@@ -155,6 +160,7 @@ export class AngularVisaCostComponent implements OnInit, OnDestroy {
     }
 
     onCellValueChanged(event: CellValueChangedEvent) {
+        console.log("CellValueChangedEvent")
         const coldId = event.column.getColId();
         const node = event.node;
         this.repository.AddUpdateItem(event.data);
@@ -194,5 +200,6 @@ export class AngularVisaCostComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        this.repository.ClearUpdateItemStorage()
     }
 }

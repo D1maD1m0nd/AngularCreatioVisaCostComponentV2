@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ICostItem} from "../../data/model/response/ItemCost";
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition,} from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
@@ -13,7 +13,7 @@ import {VisaRepository} from "../../repository/VisaRepository";
     templateUrl: './saved-group-visa.component.html',
     styleUrls: ['./saved-group-visa.component.scss']
 })
-export class SavedGroupVisaComponent implements OnInit, OnDestroy {
+export class SavedGroupVisaComponent implements OnInit {
     @Input("ICostVisaItems") ICostVisaItem: ICostItem[]
     @Input("Year") Year: string
     @Input("Brand") Brand: string
@@ -40,10 +40,12 @@ export class SavedGroupVisaComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe((result: DialogTypeEnum) => {
             switch (result) {
                 case DialogTypeEnum.CLOSED_DIALOG:
+                    this.bridgeService.OnCloseButtonClick$.next(true)
                     break;
                 case DialogTypeEnum.SAVED_DIALOG:
                     console.log('SAVED_DIALOG');
                     this.repository.SaveCostItemsToLocalStore(this.ICostVisaItem);
+                    this.bridgeService.OnCloseButtonClick$.next(true)
                     break;
                 case DialogTypeEnum.SAVED_AND_SEND_DIALOG:
                 case DialogTypeEnum.YES_RESULT:
@@ -51,6 +53,9 @@ export class SavedGroupVisaComponent implements OnInit, OnDestroy {
                     this.repository.UpdateRecordsDetailBudgetSum().subscribe(i => {
                         this.openSnackBar("Сохранение прошло успешно");
                         this.repository.ClearStorage()
+                        if (result == DialogTypeEnum.SAVED_AND_SEND_DIALOG) {
+                            this.bridgeService.OnCloseButtonClick$.next(true)
+                        }
                     });
                     break;
                 case DialogTypeEnum.NO_RESULT:
@@ -97,10 +102,6 @@ export class SavedGroupVisaComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-    }
-
-    ngOnDestroy(): void {
-        this.repository.ClearStorage()
     }
 
 }
